@@ -18,11 +18,9 @@ export function Layout({ children }: { children: ReactNode }) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
             {/* Brand */}
             <div className="lg:col-span-2">
-              <img
-                src={logoIcon}
-                alt="AB Capital Logistics"
-                className="h-16 w-auto mb-2 brightness-0 invert"
-              />
+              <span className="text-2xl font-bold tracking-tight text-white mb-4 block">
+                AB Capital <span className="text-accent">Logistics</span>
+              </span>
               <p className="text-gray-400 mb-6 leading-relaxed text-sm max-w-xs">
                 Your trusted gateway logistics partner for Cameroon and Central Africa. Enterprise-grade operations with deep local expertise.
               </p>
