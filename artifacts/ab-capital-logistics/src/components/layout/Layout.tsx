@@ -2,7 +2,7 @@ import { ReactNode } from "react";
 import { Navbar } from "./Navbar";
 import { Link } from "wouter";
 import { MapPin, Phone, Mail } from "lucide-react";
-import logoIcon from "@/assets/logo-icon.png";
+import logoOfficial from "@/assets/logo-official.png";
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
@@ -18,9 +18,11 @@ export function Layout({ children }: { children: ReactNode }) {
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-10 mb-12">
             {/* Brand */}
             <div className="lg:col-span-2">
-              <span className="text-2xl font-bold tracking-tight text-white mb-4 block">
-                AB Capital <span className="text-accent">Logistics</span>
-              </span>
+              <img
+                src={logoOfficial}
+                alt="AB Capital Logistics"
+                className="h-14 w-auto mb-2 brightness-0 invert"
+              />
               <p className="text-gray-400 mb-6 leading-relaxed text-sm max-w-xs">
                 Your trusted gateway logistics partner for Cameroon and Central Africa. Enterprise-grade operations with deep local expertise.
               </p>
