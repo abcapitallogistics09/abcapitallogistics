@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
+import shipAgencyHero from "@/assets/ship-agency-hero.png";
 import { Button } from "@/components/ui/button";
 import {
   Anchor, Ship, Clock, FileText, Users, Wrench,
@@ -79,7 +80,7 @@ export default function ShipAgency() {
       <section className="relative bg-primary py-32 pt-40 overflow-hidden">
         <div
           className="absolute inset-0 bg-cover bg-center opacity-20"
-          style={{ backgroundImage: "url('https://images.unsplash.com/photo-1504855901336-d35ab96bfc56?q=80&w=2070&auto=format&fit=crop')" }}
+          style={{ backgroundImage: `url('${shipAgencyHero}')` }}
         />
         <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-secondary/60" />
         <div className="container mx-auto px-4 md:px-6 relative z-10">

@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
+import shipAgencyHero from "@/assets/ship-agency-hero.png";
 import {
   ArrowRight, ArrowRight as ArrowRightIcon,
   Plane, Ship, Truck, Package, ShieldCheck, Globe, Anchor,
@@ -55,7 +56,7 @@ const slides = [
   },
   {
     id: 4,
-    image: "https://images.unsplash.com/photo-1504855901336-d35ab96bfc56?q=80&w=2070&auto=format&fit=crop",
+    image: shipAgencyHero,
     tag: "Ship Agency",
     tagIcon: Anchor,
     headline: "Professional\nShip Agency Services",

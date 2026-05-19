@@ -1,0 +1,13 @@
+uploads = []
+
+[[generated]]
+id = "3dcJWmGfmtDjsWCkvi0U1"
+uri = "file://artifacts/ab-capital-logistics/src/assets/ship-agency-hero.png"
+type = "image"
+title = "ship agency hero port vessel"
+
+[[outputs]]
+id = "XHMX4p8pn_uvV-WfOfpc9"
+uri = "file://artifacts/ab-capital-logistics/src/assets/ship-agency-hero.png"
+type = "image"
+title = "Ship Agency Slider Background"
