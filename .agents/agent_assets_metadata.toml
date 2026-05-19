@@ -6,6 +6,66 @@ uri = "file://artifacts/ab-capital-logistics/src/assets/ship-agency-hero.png"
 type = "image"
 title = "ship agency hero port vessel"
 
+[[generated]]
+id = "VWXoOW_iQlTUEWPeL1fUL"
+uri = "file://artifacts/ab-capital-logistics/src/assets/hero-about.png"
+type = "image"
+title = "about us team operations center"
+
+[[generated]]
+id = "TgutiYr3KIm30KWbHCIeJ"
+uri = "file://artifacts/ab-capital-logistics/src/assets/hero-contact.png"
+type = "image"
+title = "Douala port aerial dusk"
+
+[[generated]]
+id = "Au8Ib8OxLw8MUiGlsM4XG"
+uri = "file://artifacts/ab-capital-logistics/src/assets/hero-tracking.png"
+type = "image"
+title = "logistics tracking command center"
+
+[[generated]]
+id = "m6C0aMSBIu0ymfFRvIdJE"
+uri = "file://artifacts/ab-capital-logistics/src/assets/hero-quote.png"
+type = "image"
+title = "container terminal golden hour"
+
+[[generated]]
+id = "1dGKIo_Qff2BhrxVGgH6j"
+uri = "file://artifacts/ab-capital-logistics/src/assets/hero-services.png"
+type = "image"
+title = "multi-modal logistics services panorama"
+
+[[generated]]
+id = "DpJMdpXh_nobYMgg0ZaOB"
+uri = "file://artifacts/ab-capital-logistics/src/assets/hero-industries.png"
+type = "image"
+title = "African industry aerial diversity"
+
+[[generated]]
+id = "iDNvFKdDlzi88noM-Wbxq"
+uri = "file://artifacts/ab-capital-logistics/src/assets/hero-blog.png"
+type = "image"
+title = "logistics blog editorial workspace"
+
+[[generated]]
+id = "0bLJYIzEGmpEL9JTrUMcu"
+uri = "file://artifacts/ab-capital-logistics/src/assets/hero-global-network.png"
+type = "image"
+title = "global logistics network world map"
+
+[[generated]]
+id = "FxetCSdmKv4-ubMyzWIsz"
+uri = "file://artifacts/ab-capital-logistics/src/assets/hero-careers.png"
+type = "image"
+title = "logistics careers professional team"
+
+[[generated]]
+id = "kHgsr3JJdK1D8wcTxYCbW"
+uri = "file://artifacts/ab-capital-logistics/src/assets/hero-faq.png"
+type = "image"
+title = "logistics FAQ support office"
+
 [[outputs]]
 id = "XHMX4p8pn_uvV-WfOfpc9"
 uri = "file://artifacts/ab-capital-logistics/src/assets/ship-agency-hero.png"

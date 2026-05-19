@@ -4,6 +4,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Search, Package, CheckCircle, Truck, Plane, Ship, Clock, MapPin, AlertCircle } from "lucide-react";
 import { useTrackShipment, getTrackShipmentQueryKey } from "@workspace/api-client-react";
+import heroTracking from "@/assets/hero-tracking.png";
 
 const statusConfig: Record<string, { label: string; color: string; icon: typeof Package }> = {
   pending: { label: "Pending", color: "text-yellow-600 bg-yellow-50 border-yellow-200", icon: Clock },
@@ -46,7 +47,8 @@ export default function Tracking() {
     <div>
       {/* Hero */}
       <section className="relative bg-primary py-32 pt-40 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary/80" />
+        <div className="absolute inset-0 bg-cover bg-center opacity-25" style={{ backgroundImage: `url('${heroTracking}')` }} />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-secondary/60" />
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

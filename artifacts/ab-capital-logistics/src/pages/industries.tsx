@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Flame, ShoppingBag, Radio, Monitor, Heart, Wheat, Car, Store, Package } from "lucide-react";
+import heroIndustries from "@/assets/hero-industries.png";
 
 const industries = [
   {
@@ -65,7 +66,8 @@ export default function Industries() {
     <div>
       {/* Hero */}
       <section className="relative bg-primary py-32 pt-40 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary/80" />
+        <div className="absolute inset-0 bg-cover bg-center opacity-25" style={{ backgroundImage: `url('${heroIndustries}')` }} />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-secondary/60" />
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <p className="text-accent font-semibold mb-3 uppercase text-sm tracking-wide">Sectors We Serve</p>

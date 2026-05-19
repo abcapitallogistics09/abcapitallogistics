@@ -10,6 +10,7 @@ import { Textarea } from "@/components/ui/textarea";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
 import { MapPin, Phone, Mail, Clock, CheckCircle } from "lucide-react";
 import { useSubmitContact } from "@workspace/api-client-react";
+import heroContact from "@/assets/hero-contact.png";
 
 const contactSchema = z.object({
   name: z.string().min(2, "Name must be at least 2 characters"),
@@ -60,7 +61,8 @@ export default function Contact() {
     <div>
       {/* Hero */}
       <section className="relative bg-primary py-32 pt-40 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary/80" />
+        <div className="absolute inset-0 bg-cover bg-center opacity-25" style={{ backgroundImage: `url('${heroContact}')` }} />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-secondary/60" />
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <motion.div
             initial={{ opacity: 0, y: 20 }}

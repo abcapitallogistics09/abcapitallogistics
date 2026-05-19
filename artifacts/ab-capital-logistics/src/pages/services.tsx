@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import { Plane, Ship, Truck, ShieldCheck, Package, Globe, ArrowRight } from "lucide-react";
+import heroServices from "@/assets/hero-services.png";
 
 const services = [
   {
@@ -53,8 +54,8 @@ export default function Services() {
     <div>
       {/* Hero */}
       <section className="relative bg-primary py-32 pt-40 overflow-hidden">
-        <div className="absolute inset-0 bg-[url('https://images.unsplash.com/photo-1494412574643-ff11b0a5c1c3?q=80&w=2070&auto=format&fit=crop')] bg-cover bg-center opacity-10" />
-        <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary/80" />
+        <div className="absolute inset-0 bg-cover bg-center opacity-25" style={{ backgroundImage: `url('${heroServices}')` }} />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-secondary/60" />
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
             <p className="text-accent font-semibold mb-3 uppercase text-sm tracking-wide">What We Offer</p>

@@ -11,6 +11,7 @@ import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@
 import { Checkbox } from "@/components/ui/checkbox";
 import { CheckCircle, ChevronRight, ChevronLeft } from "lucide-react";
 import { useSubmitQuote } from "@workspace/api-client-react";
+import heroQuote from "@/assets/hero-quote.png";
 
 const quoteSchema = z.object({
   freightType: z.string().min(1, "Please select a freight type"),
@@ -114,7 +115,8 @@ export default function Quote() {
     <div>
       {/* Hero */}
       <section className="relative bg-primary py-32 pt-40 overflow-hidden">
-        <div className="absolute inset-0 bg-gradient-to-r from-primary to-secondary/80" />
+        <div className="absolute inset-0 bg-cover bg-center opacity-25" style={{ backgroundImage: `url('${heroQuote}')` }} />
+        <div className="absolute inset-0 bg-gradient-to-r from-primary via-primary/90 to-secondary/60" />
         <div className="container mx-auto px-4 md:px-6 relative z-10">
           <motion.div initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }}>
             <p className="text-accent font-semibold mb-3 uppercase text-sm tracking-wide">Get a Quote</p>
