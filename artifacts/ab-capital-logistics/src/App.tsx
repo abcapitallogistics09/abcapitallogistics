@@ -21,33 +21,42 @@ import ShipAgency from "@/pages/ship-agency";
 import Gallery from "@/pages/gallery";
 import PrivacyPolicy from "@/pages/privacy-policy";
 import TermsOfService from "@/pages/terms-of-service";
+import AdminLogin from "@/admin/AdminLogin";
+import AdminApp from "@/admin/AdminApp";
 
 const queryClient = new QueryClient();
 
 function Router() {
   return (
-    <Layout>
-      <Switch>
-        <Route path="/" component={Home} />
-        <Route path="/about" component={About} />
-        <Route path="/contact" component={Contact} />
-        <Route path="/tracking" component={Tracking} />
-        <Route path="/quote" component={Quote} />
-        <Route path="/services" component={Services} />
-        <Route path="/services/:slug" component={ServiceDetail} />
-        <Route path="/industries" component={Industries} />
-        <Route path="/blog" component={Blog} />
-        <Route path="/blog/:slug" component={BlogPost} />
-        <Route path="/faq" component={FAQ} />
-        <Route path="/careers" component={Careers} />
-        <Route path="/global-network" component={GlobalNetwork} />
-        <Route path="/ship-agency" component={ShipAgency} />
-        <Route path="/gallery" component={Gallery} />
-        <Route path="/privacy" component={PrivacyPolicy} />
-        <Route path="/terms" component={TermsOfService} />
-        <Route component={NotFound} />
-      </Switch>
-    </Layout>
+    <Switch>
+      <Route path="/admin/login" component={AdminLogin} />
+      <Route path="/admin/:rest*" component={AdminApp} />
+      <Route path="/admin" component={AdminApp} />
+      <Route>
+        <Layout>
+          <Switch>
+            <Route path="/" component={Home} />
+            <Route path="/about" component={About} />
+            <Route path="/contact" component={Contact} />
+            <Route path="/tracking" component={Tracking} />
+            <Route path="/quote" component={Quote} />
+            <Route path="/services" component={Services} />
+            <Route path="/services/:slug" component={ServiceDetail} />
+            <Route path="/industries" component={Industries} />
+            <Route path="/blog" component={Blog} />
+            <Route path="/blog/:slug" component={BlogPost} />
+            <Route path="/faq" component={FAQ} />
+            <Route path="/careers" component={Careers} />
+            <Route path="/global-network" component={GlobalNetwork} />
+            <Route path="/ship-agency" component={ShipAgency} />
+            <Route path="/gallery" component={Gallery} />
+            <Route path="/privacy" component={PrivacyPolicy} />
+            <Route path="/terms" component={TermsOfService} />
+            <Route component={NotFound} />
+          </Switch>
+        </Layout>
+      </Route>
+    </Switch>
   );
 }
 
