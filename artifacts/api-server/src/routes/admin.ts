@@ -25,7 +25,7 @@ router.post("/admin/login", (req: Request, res: Response): void => {
     return;
   }
 
-  if (username !== ADMIN_USERNAME || password !== ADMIN_PASSWORD) {
+  if (username.trim() !== ADMIN_USERNAME.trim() || password.trim() !== ADMIN_PASSWORD.trim()) {
     res.status(401).json({ error: "Invalid credentials" });
     return;
   }
