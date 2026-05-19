@@ -1,0 +1,491 @@
+Build a world-class, premium, modern logistics and freight forwarding website for AB Capital Logistics using the EXACT existing website content, services, SEO URLs, page structure, and business information currently found on:
+
+[AB Capital Logistics Official Website](https://www.abcapitallogistics.com?utm_source=chatgpt.com)
+
+The new website must completely redesign the UI/UX into a stunning, modern, dynamic, enterprise-grade logistics platform while preserving and improving the existing SEO structure, page hierarchy, metadata, service pages, and rankings.
+
+The final website should position AB Capital Logistics as:
+
+* A leading freight forwarding and logistics company in Cameroon
+* A gateway logistics partner for Central Africa
+* A premium global trade and supply chain company
+* A modern technology-enabled logistics provider
+
+The website should feel comparable to:
+
+* DHL
+* Flexport
+* Maersk
+* DP World
+* Kuehne+Nagel
+* Bolloré Logistics
+
+while still maintaining African market relevance and AB Capital Logistics branding.
+
+---
+
+## CORE REQUIREMENTS
+
+1. Preserve ALL existing website information:
+
+* Services
+* Company information
+* About content
+* Contact information
+* Blog content
+* SEO URLs
+* Existing keyword structure
+* Metadata where applicable
+* Existing service descriptions
+* Existing logistics terminology
+
+2. Improve:
+
+* UI/UX
+* Visual hierarchy
+* Mobile responsiveness
+* Speed optimization
+* SEO optimization
+* Conversion optimization
+* Accessibility
+* Animations
+* Brand authority positioning
+
+3. Maintain and improve SEO:
+
+* Preserve URL slugs exactly where possible
+* Preserve indexed pages
+* Maintain heading hierarchy
+* Improve technical SEO
+* Add schema markup
+* Optimize Core Web Vitals
+* Add internal linking structure
+* Add Open Graph tags
+* Add structured metadata
+* Add dynamic sitemap generation
+* Add robots.txt
+* Optimize image loading
+* Add keyword-rich service sections
+
+4. Technology Stack:
+   Use:
+
+* Next.js 15+
+* TypeScript
+* Tailwind CSS
+* Framer Motion
+* GSAP animations
+* React Icons
+* ShadCN UI
+* Lucide Icons
+* Responsive design
+* SEO-first architecture
+
+5. Build as a production-grade website deployable on:
+
+* Vercel
+* Replit
+* Netlify
+
+---
+
+## BRAND & DESIGN SYSTEM
+
+Use AB Capital Logistics logo colors:
+
+Primary Blue: #0B1F3A
+Secondary Blue: #123D6B
+Accent Orange: #F28C28
+Background: #F8FAFC
+Dark Text: #1A1A1A
+Gray Borders: #E5E7EB
+
+Design Style:
+
+* Premium
+* Corporate
+* Clean
+* Futuristic
+* African trade focused
+* International logistics aesthetic
+* Dynamic animations
+* Glassmorphism cards
+* Smooth transitions
+* Enterprise-grade UI
+* Mobile-first
+
+Typography:
+
+* Modern sans-serif
+* Strong hero typography
+* Clean readability
+* Large section headings
+
+---
+
+## WEBSITE STRUCTURE
+
+Create the following pages:
+
+1. Home
+2. About
+3. Services
+4. Individual Service Pages
+5. Industries
+6. Blog
+7. Contact
+8. Shipment Tracking
+9. Quote Request
+10. FAQ
+11. Careers
+12. Global Network
+
+---
+
+## HOME PAGE
+
+Create a cinematic logistics homepage with:
+
+HERO SECTION:
+
+* Fullscreen animated hero
+* Video or animated logistics background
+* Cargo ships
+* Air freight
+* Trucks
+* Warehouses
+* African trade routes
+* Douala port visuals
+
+Headline:
+“Your Trusted Logistics Partner in Cameroon & Central Africa”
+
+Subheadline:
+“Freight Forwarding • Customs Clearance • Warehousing • 3PL Solutions”
+
+Primary CTA:
+
+* Request Quote
+
+Secondary CTA:
+
+* Track Shipment
+
+Include:
+
+* Animated shipping route overlays
+* Motion effects
+* Scroll indicators
+* Floating cargo graphics
+
+---
+
+## TRUST SECTION
+
+Display global shipping partner logos:
+
+* DHL
+* Maersk
+* CMA CGM
+* COSCO
+* Evergreen
+* PIL
+* FedEx
+
+Use elegant grayscale hover animations.
+
+---
+
+## SERVICES SECTION
+
+Create animated premium cards for:
+
+* Air Freight
+* Ocean Freight
+* Road Freight
+* Customs Clearance
+* Warehousing
+* 3PL Logistics
+
+Each card should include:
+
+* Icon
+* Hover effects
+* CTA button
+* Motion animation
+* SEO-rich description
+
+---
+
+## WHY CHOOSE US SECTION
+
+Add animated counters:
+
+* Shipments Delivered
+* Countries Served
+* Customs Clearance Success Rate
+* Client Satisfaction
+
+Include:
+
+* African logistics expertise
+* CEMAC coverage
+* Global partnerships
+* Fast delivery operations
+
+---
+
+## GLOBAL NETWORK MAP
+
+Add:
+
+* Interactive animated world map
+* Shipping routes
+* Central Africa focus
+* Douala logistics hub visualization
+
+Highlight:
+
+* Cameroon
+* Chad
+* Central African Republic
+* Congo
+* Gabon
+* Europe
+* Asia
+* USA
+
+---
+
+## INDUSTRIES SECTION
+
+Create industry cards for:
+
+* Oil & Gas
+* FMCG
+* Telecom
+* Technology
+* NGO & Humanitarian
+* Agriculture
+* Automotive
+* Retail
+* E-commerce
+
+---
+
+## ABOUT PAGE
+
+Build a premium corporate about page with:
+
+* Company story
+* Mission
+* Vision
+* Leadership team
+* Core values
+* Global network
+* Timeline
+* Animated statistics
+
+Use professional layouts and executive styling.
+
+---
+
+## SERVICES PAGES
+
+Each logistics service page must include:
+
+* Hero banner
+* Detailed service explanation
+* Benefits section
+* Process workflow
+* FAQ accordion
+* CTA form
+* SEO metadata
+* Internal linking
+
+Optimize each page for keywords like:
+
+* Freight forwarding Cameroon
+* Shipping to Cameroon
+* Customs clearance Douala
+* Air freight Cameroon
+* Warehousing Cameroon
+* 3PL Cameroon
+
+---
+
+## SHIPMENT TRACKING PAGE
+
+Build a modern shipment tracking dashboard with:
+
+* Tracking number search
+* Shipment timeline
+* Status indicators
+* Delivery milestones
+* Estimated delivery
+* Customs progress
+* Responsive dashboard UI
+
+---
+
+## QUOTE REQUEST PAGE
+
+Create a modern multi-step quote form with:
+
+* Cargo type
+* Weight
+* Destination
+* Freight method
+* Incoterms
+* File upload
+* Contact details
+
+Include:
+
+* Validation
+* Progress indicator
+* CRM-ready structure
+
+---
+
+## BLOG SYSTEM
+
+Build a modern SEO blog system with:
+
+* Categories
+* Featured posts
+* Search functionality
+* Rich article layouts
+* Dynamic metadata
+* Social sharing
+* Related articles
+* Table of contents
+
+Preserve all existing SEO blog URLs if possible.
+
+---
+
+## CONTACT PAGE
+
+Include:
+
+* Interactive map
+* WhatsApp integration
+* Contact form
+* Office details
+* Email links
+* Phone numbers
+* Business hours
+
+Add:
+
+* Floating WhatsApp button
+* Sticky contact CTA
+
+---
+
+## ANIMATIONS & INTERACTIONS
+
+Use:
+
+* Framer Motion
+* GSAP
+* Scroll-triggered animations
+* Smooth transitions
+* Floating elements
+* Animated counters
+* Hover interactions
+* Dynamic gradients
+* Loading animations
+
+Keep animations professional and smooth.
+
+---
+
+## SEO REQUIREMENTS
+
+CRITICAL:
+Maintain and improve ALL existing SEO structures.
+
+Implement:
+
+* Dynamic metadata
+* Canonical URLs
+* Structured schema markup
+* Open Graph tags
+* Twitter cards
+* XML sitemap
+* robots.txt
+* Breadcrumb schema
+* Local business schema
+* FAQ schema
+* Optimized heading structure
+* Semantic HTML
+
+Optimize for:
+
+* Cameroon logistics
+* Freight forwarding Cameroon
+* Shipping to Cameroon
+* Douala customs clearance
+* Central Africa logistics
+* 3PL Cameroon
+
+---
+
+## PERFORMANCE REQUIREMENTS
+
+Optimize for:
+
+* Fast loading
+* Lazy loading
+* Image optimization
+* Mobile performance
+* Core Web Vitals
+* SEO performance
+* Accessibility
+
+Target:
+
+* 95+ Lighthouse Performance
+* 95+ SEO score
+* Fully responsive
+* Mobile-first
+
+---
+
+## FOOTER
+
+Create a premium footer with:
+
+* Company links
+* Services
+* Industries
+* Resources
+* Social icons
+* Contact details
+* Newsletter signup
+* Certifications
+* Copyright
+
+---
+
+## FINAL OBJECTIVE
+
+The final website should look like a premium international logistics enterprise operating across Africa and global trade markets.
+
+It must visually communicate:
+“AB Capital Logistics is the trusted gateway logistics partner for Cameroon and Central Africa.”
+
+The website should feel:
+
+* Expensive
+* Modern
+* Trusted
+* Corporate
+* Global
+* Technology-enabled
+* Dynamic
+* Conversion-focused
+
+Build the complete website with reusable components, scalable architecture, SEO-first structure, and production-ready clean code.

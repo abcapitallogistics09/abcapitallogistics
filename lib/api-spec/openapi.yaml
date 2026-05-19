@@ -3,13 +3,19 @@ info:
   # Do not change the title, if the title changes, the import paths will be broken
   title: Api
   version: 0.1.0
-  description: API specification
+  description: AB Capital Logistics API
 servers:
   - url: /api
     description: Base API path
 tags:
   - name: health
     description: Health operations
+  - name: quote
+    description: Quote request operations
+  - name: contact
+    description: Contact form operations
+  - name: tracking
+    description: Shipment tracking operations
 paths:
   /healthz:
     get:
@@ -24,6 +30,70 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/HealthStatus"
+
+  /quote:
+    post:
+      operationId: submitQuote
+      tags: [quote]
+      summary: Submit a freight quote request
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/QuoteInput"
+      responses:
+        "201":
+          description: Quote request submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/QuoteResponse"
+        "400":
+          description: Invalid request
+
+  /contact:
+    post:
+      operationId: submitContact
+      tags: [contact]
+      summary: Submit a contact form message
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ContactInput"
+      responses:
+        "201":
+          description: Contact message submitted
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/ContactResponse"
+        "400":
+          description: Invalid request
+
+  /tracking/{trackingNumber}:
+    get:
+      operationId: trackShipment
+      tags: [tracking]
+      summary: Track a shipment by tracking number
+      parameters:
+        - name: trackingNumber
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Shipment tracking info
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/TrackingResult"
+        "404":
+          description: Tracking number not found
+
 components:
   schemas:
     HealthStatus:
@@ -34,3 +104,144 @@ components:
       required:
         - status
 
+    QuoteInput:
+      type: object
+      required:
+        - name
+        - email
+        - phone
+        - origin
+        - destination
+        - freightType
+        - cargoType
+        - weight
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: string
+        company:
+          type: ["string", "null"]
+        origin:
+          type: string
+        destination:
+          type: string
+        freightType:
+          type: string
+          enum: [air, ocean, road, warehousing, customs, threepl]
+        cargoType:
+          type: string
+        weight:
+          type: string
+        volume:
+          type: ["string", "null"]
+        incoterms:
+          type: ["string", "null"]
+        hazardous:
+          type: boolean
+        message:
+          type: ["string", "null"]
+
+    QuoteResponse:
+      type: object
+      required:
+        - success
+        - referenceNumber
+        - message
+      properties:
+        success:
+          type: boolean
+        referenceNumber:
+          type: string
+        message:
+          type: string
+
+    ContactInput:
+      type: object
+      required:
+        - name
+        - email
+        - subject
+        - message
+      properties:
+        name:
+          type: string
+        email:
+          type: string
+        phone:
+          type: ["string", "null"]
+        company:
+          type: ["string", "null"]
+        subject:
+          type: string
+        message:
+          type: string
+
+    ContactResponse:
+      type: object
+      required:
+        - success
+        - message
+      properties:
+        success:
+          type: boolean
+        message:
+          type: string
+
+    TrackingEvent:
+      type: object
+      required:
+        - date
+        - time
+        - location
+        - status
+        - description
+      properties:
+        date:
+          type: string
+        time:
+          type: string
+        location:
+          type: string
+        status:
+          type: string
+        description:
+          type: string
+
+    TrackingResult:
+      type: object
+      required:
+        - trackingNumber
+        - status
+        - origin
+        - destination
+        - estimatedDelivery
+        - carrier
+        - freightType
+        - events
+      properties:
+        trackingNumber:
+          type: string
+        status:
+          type: string
+          enum: [in_transit, customs_clearance, delivered, pending, out_for_delivery]
+        origin:
+          type: string
+        destination:
+          type: string
+        estimatedDelivery:
+          type: string
+        carrier:
+          type: string
+        freightType:
+          type: string
+        weight:
+          type: ["string", "null"]
+        description:
+          type: ["string", "null"]
+        events:
+          type: array
+          items:
+            $ref: "#/components/schemas/TrackingEvent"
