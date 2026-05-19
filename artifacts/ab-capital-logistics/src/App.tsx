@@ -19,6 +19,8 @@ import Careers from "@/pages/careers";
 import GlobalNetwork from "@/pages/global-network";
 import ShipAgency from "@/pages/ship-agency";
 import Gallery from "@/pages/gallery";
+import PrivacyPolicy from "@/pages/privacy-policy";
+import TermsOfService from "@/pages/terms-of-service";
 
 const queryClient = new QueryClient();
 
@@ -41,6 +43,8 @@ function Router() {
         <Route path="/global-network" component={GlobalNetwork} />
         <Route path="/ship-agency" component={ShipAgency} />
         <Route path="/gallery" component={Gallery} />
+        <Route path="/privacy" component={PrivacyPolicy} />
+        <Route path="/terms" component={TermsOfService} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
