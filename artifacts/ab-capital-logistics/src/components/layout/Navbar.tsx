@@ -65,13 +65,13 @@ export function Navbar() {
         <div className="flex items-center justify-between">
           {/* Logo */}
           <Link href="/" data-testid="link-home" className="flex items-center flex-shrink-0">
-            <img
-              src={logoOfficial}
-              alt="AB Capital Logistics"
-              className={`h-12 w-auto transition-all duration-300 ${
-                isScrolled ? "" : "brightness-0 invert"
-              }`}
-            />
+            <div className="bg-white rounded-lg px-3 py-1 shadow-sm">
+              <img
+                src={logoOfficial}
+                alt="AB Capital Logistics"
+                className="h-10 w-auto"
+              />
+            </div>
           </Link>
 
           {/* Desktop Nav */}
