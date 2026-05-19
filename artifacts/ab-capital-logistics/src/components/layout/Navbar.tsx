@@ -2,6 +2,7 @@ import { Link, useLocation } from "wouter";
 import { useState, useEffect, useRef } from "react";
 import { ChevronDown, Menu, X, Plane, Ship, Truck, ShieldCheck, Package, Globe, Anchor, Images } from "lucide-react";
 import { Button } from "@/components/ui/button";
+import logoIcon from "@/assets/logo-icon.png";
 
 const serviceLinks = [
   { href: "/services/air-freight", label: "Air Freight", icon: Plane },
@@ -63,10 +64,16 @@ export function Navbar() {
       <div className="container mx-auto px-4 md:px-6">
         <div className="flex items-center justify-between">
           {/* Logo */}
-          <Link href="/" data-testid="link-home" className="flex items-center gap-2 flex-shrink-0">
-            <span className={`text-xl font-bold tracking-tight transition-colors ${logoTextClass}`}>
-              AB Capital <span className="text-accent">Logistics</span>
-            </span>
+          <Link href="/" data-testid="link-home" className="flex items-center flex-shrink-0">
+            <img
+              src={logoIcon}
+              alt="AB Capital Logistics"
+              className={`h-14 w-auto transition-all duration-300 ${
+                isScrolled
+                  ? "[mix-blend-mode:multiply]"
+                  : "brightness-0 invert"
+              }`}
+            />
           </Link>
 
           {/* Desktop Nav */}

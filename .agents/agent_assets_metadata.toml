@@ -66,6 +66,24 @@ uri = "file://artifacts/ab-capital-logistics/src/assets/hero-faq.png"
 type = "image"
 title = "logistics FAQ support office"
 
+[[generated]]
+id = "7yOp9forerlcDugqccDsX"
+uri = "file://artifacts/ab-capital-logistics/src/assets/logo-icon.png"
+type = "image"
+title = "AB Capital Logistics logo icon"
+
+[[generated]]
+id = "bxHMk1IBC15CqYwxTHiLY"
+uri = "file://artifacts/ab-capital-logistics/src/assets/logo-icon-light.png"
+type = "image"
+title = "AB Capital Logistics logo icon light"
+
+[[generated]]
+id = "Wm27u-m_wtBRjnr1Pvf2O"
+uri = "file://artifacts/ab-capital-logistics/src/assets/logo-mark.png"
+type = "image"
+title = "AB Capital logo mark icon only"
+
 [[outputs]]
 id = "XHMX4p8pn_uvV-WfOfpc9"
 uri = "file://artifacts/ab-capital-logistics/src/assets/ship-agency-hero.png"
