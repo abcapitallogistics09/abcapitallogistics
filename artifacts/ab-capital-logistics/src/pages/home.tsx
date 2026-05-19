@@ -3,6 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import shipAgencyHero from "@/assets/ship-agency-hero.png";
+import heroWarehousing from "@/assets/hero-warehousing.png";
+import hero3pl from "@/assets/hero-3pl.png";
 import {
   ArrowRight, ArrowRight as ArrowRightIcon,
   Plane, Ship, Truck, Package, ShieldCheck, Globe, Anchor,
@@ -64,6 +66,28 @@ const slides = [
       "Comprehensive port agency services in Douala — from vessel pre-arrival planning to crew handling, husbandry, and cargo coordination.",
     cta: { label: "Explore Ship Agency", href: "/ship-agency" },
     accent: "from-primary via-secondary/90 to-primary/50",
+  },
+  {
+    id: 5,
+    image: heroWarehousing,
+    tag: "Warehousing",
+    tagIcon: Package,
+    headline: "Secure Warehousing\nin Douala",
+    subtext:
+      "State-of-the-art bonded and open storage facilities in Douala. Flexible short and long-term solutions with real-time inventory management.",
+    cta: { label: "Explore Warehousing", href: "/services/warehousing" },
+    accent: "from-primary via-primary/85 to-secondary/50",
+  },
+  {
+    id: 6,
+    image: hero3pl,
+    tag: "3PL Solutions",
+    tagIcon: Globe,
+    headline: "End-to-End\n3PL Logistics",
+    subtext:
+      "Fully integrated third-party logistics — from procurement and freight to warehousing, distribution, and last-mile delivery across Central Africa.",
+    cta: { label: "Explore 3PL Solutions", href: "/services/3pl" },
+    accent: "from-primary via-[#123D6B]/80 to-secondary/40",
   },
 ];
 

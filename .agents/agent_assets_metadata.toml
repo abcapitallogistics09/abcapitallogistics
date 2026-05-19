@@ -84,6 +84,18 @@ uri = "file://artifacts/ab-capital-logistics/src/assets/logo-mark.png"
 type = "image"
 title = "AB Capital logo mark icon only"
 
+[[generated]]
+id = "dxVX16HhIWmuPg87wIE_D"
+uri = "file://attached_assets/generated_images/premium_large_modern_warehouse_c9b3.png"
+type = "image"
+title = "generated_image"
+
+[[generated]]
+id = "TkrVsf5ZFbeOEtisUR8Iw"
+uri = "file://attached_assets/generated_images/modern_3pl_third_party_2d5d.png"
+type = "image"
+title = "generated_image"
+
 [[outputs]]
 id = "XHMX4p8pn_uvV-WfOfpc9"
 uri = "file://artifacts/ab-capital-logistics/src/assets/ship-agency-hero.png"
