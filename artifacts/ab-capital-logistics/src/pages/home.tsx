@@ -3,8 +3,8 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Link } from "wouter";
 import { Button } from "@/components/ui/button";
 import {
-  ArrowRight, ArrowLeft, ArrowRight as ArrowRightIcon,
-  Plane, Ship, Truck, Package, ShieldCheck, Globe,
+  ArrowRight, ArrowRight as ArrowRightIcon,
+  Plane, Ship, Truck, Package, ShieldCheck, Globe, Anchor,
   ChevronLeft, ChevronRight,
 } from "lucide-react";
 
@@ -52,6 +52,17 @@ const slides = [
       "Cross-border road freight linking Douala to Chad, CAR, Congo, and Gabon — the backbone of Central African trade, built on reliability.",
     cta: { label: "Explore Road Freight", href: "/services/road-freight" },
     accent: "from-primary via-primary/85 to-[#0B1F3A]/30",
+  },
+  {
+    id: 4,
+    image: "https://images.unsplash.com/photo-1504855901336-d35ab96bfc56?q=80&w=2070&auto=format&fit=crop",
+    tag: "Ship Agency",
+    tagIcon: Anchor,
+    headline: "Professional\nShip Agency Services",
+    subtext:
+      "Comprehensive port agency services in Douala — from vessel pre-arrival planning to crew handling, husbandry, and cargo coordination.",
+    cta: { label: "Explore Ship Agency", href: "/ship-agency" },
+    accent: "from-primary via-secondary/90 to-primary/50",
   },
 ];
 

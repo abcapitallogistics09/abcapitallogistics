@@ -58,6 +58,8 @@ export function Layout({ children }: { children: ReactNode }) {
               <ul className="space-y-3 text-sm">
                 <li><Link href="/about" className="hover:text-accent transition-colors">About Us</Link></li>
                 <li><Link href="/industries" className="hover:text-accent transition-colors">Industries</Link></li>
+                <li><Link href="/ship-agency" className="hover:text-accent transition-colors">Ship Agency</Link></li>
+                <li><Link href="/gallery" className="hover:text-accent transition-colors">Gallery</Link></li>
                 <li><Link href="/global-network" className="hover:text-accent transition-colors">Global Network</Link></li>
                 <li><Link href="/blog" className="hover:text-accent transition-colors">Blog</Link></li>
                 <li><Link href="/careers" className="hover:text-accent transition-colors">Careers</Link></li>

@@ -17,6 +17,8 @@ import BlogPost from "@/pages/blog-post";
 import FAQ from "@/pages/faq";
 import Careers from "@/pages/careers";
 import GlobalNetwork from "@/pages/global-network";
+import ShipAgency from "@/pages/ship-agency";
+import Gallery from "@/pages/gallery";
 
 const queryClient = new QueryClient();
 
@@ -37,6 +39,8 @@ function Router() {
         <Route path="/faq" component={FAQ} />
         <Route path="/careers" component={Careers} />
         <Route path="/global-network" component={GlobalNetwork} />
+        <Route path="/ship-agency" component={ShipAgency} />
+        <Route path="/gallery" component={Gallery} />
         <Route component={NotFound} />
       </Switch>
     </Layout>
