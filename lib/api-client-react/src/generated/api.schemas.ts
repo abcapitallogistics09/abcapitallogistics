@@ -63,6 +63,24 @@ export interface ContactResponse {
   message: string;
 }
 
+export interface OpenaiConversation {
+  id: number;
+  title: string;
+  createdAt: string;
+}
+
+export interface OpenaiConversationInput {
+  title: string;
+}
+
+export interface OpenaiMessageInput {
+  content: string;
+}
+
+export interface OpenaiError {
+  error: string;
+}
+
 export interface TrackingEvent {
   date: string;
   time: string;

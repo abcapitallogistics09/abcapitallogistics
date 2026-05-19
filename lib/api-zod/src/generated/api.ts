@@ -51,6 +51,26 @@ export const SubmitContactBody = zod.object({
 
 
 /**
+ * @summary Create a new conversation
+ */
+export const CreateOpenaiConversationBody = zod.object({
+  "title": zod.string()
+})
+
+
+/**
+ * @summary Send a text message and receive a streaming text response
+ */
+export const SendOpenaiMessageParams = zod.object({
+  "id": zod.coerce.number()
+})
+
+export const SendOpenaiMessageBody = zod.object({
+  "content": zod.string()
+})
+
+
+/**
  * @summary Track a shipment by tracking number
  */
 export const TrackShipmentParams = zod.object({

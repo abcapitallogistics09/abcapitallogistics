@@ -23,6 +23,9 @@ import type {
   ContactInput,
   ContactResponse,
   HealthStatus,
+  OpenaiConversation,
+  OpenaiConversationInput,
+  OpenaiMessageInput,
   QuoteInput,
   QuoteResponse,
   TrackingResult
@@ -258,6 +261,149 @@ export const useSubmitContact = <TError = ErrorType<void>,
         TContext
       > => {
       return useMutation(getSubmitContactMutationOptions(options));
+    }
+
+export const getCreateOpenaiConversationUrl = () => {
+
+
+
+
+  return `/api/openai/conversations`
+}
+
+/**
+ * @summary Create a new conversation
+ */
+export const createOpenaiConversation = async (openaiConversationInput: OpenaiConversationInput, options?: RequestInit): Promise<OpenaiConversation> => {
+
+  return customFetch<OpenaiConversation>(getCreateOpenaiConversationUrl(),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      openaiConversationInput,)
+  }
+);}
+
+
+
+
+export const getCreateOpenaiConversationMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createOpenaiConversation>>, TError,{data: BodyType<OpenaiConversationInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof createOpenaiConversation>>, TError,{data: BodyType<OpenaiConversationInput>}, TContext> => {
+
+const mutationKey = ['createOpenaiConversation'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof createOpenaiConversation>>, {data: BodyType<OpenaiConversationInput>}> = (props) => {
+          const {data} = props ?? {};
+
+          return  createOpenaiConversation(data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type CreateOpenaiConversationMutationResult = NonNullable<Awaited<ReturnType<typeof createOpenaiConversation>>>
+    export type CreateOpenaiConversationMutationBody = BodyType<OpenaiConversationInput>
+    export type CreateOpenaiConversationMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Create a new conversation
+ */
+export const useCreateOpenaiConversation = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof createOpenaiConversation>>, TError,{data: BodyType<OpenaiConversationInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof createOpenaiConversation>>,
+        TError,
+        {data: BodyType<OpenaiConversationInput>},
+        TContext
+      > => {
+      return useMutation(getCreateOpenaiConversationMutationOptions(options));
+    }
+
+export const getSendOpenaiMessageUrl = (id: number,) => {
+
+
+
+
+  return `/api/openai/conversations/${id}/messages`
+}
+
+/**
+ * @summary Send a text message and receive a streaming text response
+ */
+export const sendOpenaiMessage = async (id: number,
+    openaiMessageInput: OpenaiMessageInput, options?: RequestInit): Promise<unknown> => {
+
+  return customFetch<unknown>(getSendOpenaiMessageUrl(id),
+  {
+    ...options,
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json', ...options?.headers },
+    body: JSON.stringify(
+      openaiMessageInput,)
+  }
+);}
+
+
+
+
+export const getSendOpenaiMessageMutationOptions = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendOpenaiMessage>>, TError,{id: number;data: BodyType<OpenaiMessageInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+): UseMutationOptions<Awaited<ReturnType<typeof sendOpenaiMessage>>, TError,{id: number;data: BodyType<OpenaiMessageInput>}, TContext> => {
+
+const mutationKey = ['sendOpenaiMessage'];
+const {mutation: mutationOptions, request: requestOptions} = options ?
+      options.mutation && 'mutationKey' in options.mutation && options.mutation.mutationKey ?
+      options
+      : {...options, mutation: {...options.mutation, mutationKey}}
+      : {mutation: { mutationKey, }, request: undefined};
+
+
+
+
+      const mutationFn: MutationFunction<Awaited<ReturnType<typeof sendOpenaiMessage>>, {id: number;data: BodyType<OpenaiMessageInput>}> = (props) => {
+          const {id,data} = props ?? {};
+
+          return  sendOpenaiMessage(id,data,requestOptions)
+        }
+
+
+
+
+
+
+  return  { mutationFn, ...mutationOptions }}
+
+    export type SendOpenaiMessageMutationResult = NonNullable<Awaited<ReturnType<typeof sendOpenaiMessage>>>
+    export type SendOpenaiMessageMutationBody = BodyType<OpenaiMessageInput>
+    export type SendOpenaiMessageMutationError = ErrorType<unknown>
+
+    /**
+ * @summary Send a text message and receive a streaming text response
+ */
+export const useSendOpenaiMessage = <TError = ErrorType<unknown>,
+    TContext = unknown>(options?: { mutation?:UseMutationOptions<Awaited<ReturnType<typeof sendOpenaiMessage>>, TError,{id: number;data: BodyType<OpenaiMessageInput>}, TContext>, request?: SecondParameter<typeof customFetch>}
+ ): UseMutationResult<
+        Awaited<ReturnType<typeof sendOpenaiMessage>>,
+        TError,
+        {id: number;data: BodyType<OpenaiMessageInput>},
+        TContext
+      > => {
+      return useMutation(getSendOpenaiMessageMutationOptions(options));
     }
 
 export const getTrackShipmentUrl = (trackingNumber: string,) => {

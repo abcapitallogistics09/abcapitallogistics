@@ -3,6 +3,7 @@ import { Navbar } from "./Navbar";
 import { Link } from "wouter";
 import { MapPin, Phone, Mail } from "lucide-react";
 import logoOfficial from "@/assets/logo-official.png";
+import { ChatWidget } from "@/components/ChatWidget";
 
 export function Layout({ children }: { children: ReactNode }) {
   return (
@@ -103,6 +104,9 @@ export function Layout({ children }: { children: ReactNode }) {
           </div>
         </div>
       </footer>
+
+      {/* AI Chat Widget */}
+      <ChatWidget />
 
       {/* Floating WhatsApp Button */}
       <a
