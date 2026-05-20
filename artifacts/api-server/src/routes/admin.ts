@@ -27,17 +27,10 @@ router.post("/admin/login", (req: Request, res: Response): void => {
 
   const inputUser = username.trim();
   const inputPass = password.trim();
-  const storedUser = ADMIN_USERNAME.trim();
-  const storedPass = ADMIN_PASSWORD.trim();
-
-  req.log.info({
-    inputUserLen: inputUser.length,
-    storedUserLen: storedUser.length,
-    inputPassLen: inputPass.length,
-    storedPassLen: storedPass.length,
-    userMatch: inputUser === storedUser,
-    passMatch: inputPass === storedPass,
-  }, "Admin login attempt diagnostics");
+  // ADMIN_PASSWORD secret holds the username value, ADMIN_USERNAME holds the password value
+  // (they were entered in the wrong fields — swapped here to compensate)
+  const storedUser = ADMIN_PASSWORD.trim();
+  const storedPass = ADMIN_USERNAME.trim();
 
   if (inputUser !== storedUser || inputPass !== storedPass) {
     res.status(401).json({ error: "Invalid credentials" });
