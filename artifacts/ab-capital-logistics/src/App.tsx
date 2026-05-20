@@ -30,7 +30,7 @@ function Router() {
   return (
     <Switch>
       <Route path="/admin/login" component={AdminLogin} />
-      <Route path="/admin/:rest*" component={AdminApp} />
+      <Route path="/admin/*" component={AdminApp} />
       <Route path="/admin" component={AdminApp} />
       <Route>
         <Layout>
