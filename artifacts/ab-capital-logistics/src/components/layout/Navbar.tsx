@@ -1,6 +1,6 @@
 import { Link, useLocation } from "wouter";
 import { useState, useEffect, useRef } from "react";
-import { ChevronDown, Menu, X, Plane, Ship, Truck, ShieldCheck, Package, Globe, Anchor, Images } from "lucide-react";
+import { ChevronDown, Menu, X, Plane, Ship, Truck, ShieldCheck, Package, Globe, Anchor, Images, BookOpen } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import logoOfficial from "@/assets/logo-official.png";
 
@@ -14,13 +14,16 @@ const serviceLinks = [
   { href: "/ship-agency", label: "Ship Agency", icon: Anchor },
 ];
 
+const mediaLinks = [
+  { href: "/blog", label: "Blog", icon: BookOpen, desc: "Industry news & insights" },
+  { href: "/gallery", label: "Gallery", icon: Images, desc: "Photos & media" },
+];
+
 const navLinks = [
   { href: "/about", label: "About" },
   { href: "/industries", label: "Industries" },
   { href: "/ship-agency", label: "Ship Agency" },
-  { href: "/gallery", label: "Gallery" },
   { href: "/global-network", label: "Network" },
-  { href: "/blog", label: "Blog" },
   { href: "/contact", label: "Contact" },
 ];
 
@@ -28,8 +31,10 @@ export function Navbar() {
   const [isOpen, setIsOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
   const [servicesOpen, setServicesOpen] = useState(false);
+  const [mediaOpen, setMediaOpen] = useState(false);
   const [location] = useLocation();
-  const dropdownRef = useRef<HTMLDivElement>(null);
+  const servicesRef = useRef<HTMLDivElement>(null);
+  const mediaRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
     const handleScroll = () => setIsScrolled(window.scrollY > 20);
@@ -40,12 +45,16 @@ export function Navbar() {
   useEffect(() => {
     setIsOpen(false);
     setServicesOpen(false);
+    setMediaOpen(false);
   }, [location]);
 
   useEffect(() => {
     const handleClickOutside = (e: MouseEvent) => {
-      if (dropdownRef.current && !dropdownRef.current.contains(e.target as Node)) {
+      if (servicesRef.current && !servicesRef.current.contains(e.target as Node)) {
         setServicesOpen(false);
+      }
+      if (mediaRef.current && !mediaRef.current.contains(e.target as Node)) {
+        setMediaOpen(false);
       }
     };
     document.addEventListener("mousedown", handleClickOutside);
@@ -53,7 +62,8 @@ export function Navbar() {
   }, []);
 
   const textClass = isScrolled ? "text-gray-700 hover:text-accent" : "text-gray-100 hover:text-accent";
-  const logoTextClass = isScrolled ? "text-primary" : "text-white";
+
+  const isMediaActive = location.startsWith("/blog") || location.startsWith("/gallery");
 
   return (
     <header
@@ -77,9 +87,9 @@ export function Navbar() {
           {/* Desktop Nav */}
           <nav className="hidden xl:flex items-center gap-5">
             {/* Services Dropdown */}
-            <div ref={dropdownRef} className="relative">
+            <div ref={servicesRef} className="relative">
               <button
-                onClick={() => setServicesOpen(!servicesOpen)}
+                onClick={() => { setServicesOpen(!servicesOpen); setMediaOpen(false); }}
                 className={`flex items-center gap-1 font-medium transition-colors ${textClass}`}
                 data-testid="button-services-dropdown"
               >
@@ -114,20 +124,55 @@ export function Navbar() {
               )}
             </div>
 
+            {/* Flat nav links */}
             {navLinks.map((l) => (
               <Link
                 key={l.href}
                 href={l.href}
                 className={`font-medium transition-colors ${textClass} ${
-                  l.label === "Ship Agency" || l.label === "Gallery"
-                    ? "text-accent font-semibold hover:text-accent/80"
-                    : ""
+                  l.label === "Ship Agency" ? "text-accent font-semibold hover:text-accent/80" : ""
                 }`}
                 data-testid={`link-nav-${l.label.toLowerCase().replace(" ", "-")}`}
               >
                 {l.label}
               </Link>
             ))}
+
+            {/* Media Dropdown */}
+            <div ref={mediaRef} className="relative">
+              <button
+                onClick={() => { setMediaOpen(!mediaOpen); setServicesOpen(false); }}
+                className={`flex items-center gap-1 font-medium transition-colors ${
+                  isMediaActive
+                    ? isScrolled ? "text-accent" : "text-accent"
+                    : textClass
+                }`}
+                data-testid="button-media-dropdown"
+              >
+                Media
+                <ChevronDown className={`w-4 h-4 transition-transform ${mediaOpen ? "rotate-180" : ""}`} />
+              </button>
+              {mediaOpen && (
+                <div className="absolute top-full right-0 mt-3 w-64 bg-white rounded-2xl shadow-2xl border border-gray-100 p-3 flex flex-col gap-1">
+                  {mediaLinks.map((m) => (
+                    <Link
+                      key={m.href}
+                      href={m.href}
+                      className="flex items-center gap-3 p-3 rounded-xl hover:bg-blue-50 transition-colors group"
+                      data-testid={`link-nav-media-${m.label.toLowerCase()}`}
+                    >
+                      <div className="w-9 h-9 bg-blue-50 rounded-lg flex items-center justify-center flex-shrink-0 group-hover:bg-accent transition-colors">
+                        <m.icon className="w-4 h-4 text-secondary group-hover:text-white" />
+                      </div>
+                      <div>
+                        <p className="font-semibold text-gray-800 text-sm group-hover:text-primary leading-tight">{m.label}</p>
+                        <p className="text-xs text-gray-400 leading-tight">{m.desc}</p>
+                      </div>
+                    </Link>
+                  ))}
+                </div>
+              )}
+            </div>
           </nav>
 
           {/* Desktop CTA */}
@@ -191,14 +236,20 @@ export function Navbar() {
               <Link href="/ship-agency" className="flex items-center gap-2 p-3 font-semibold text-accent hover:bg-orange-50 rounded-lg">
                 <Anchor className="w-4 h-4" /> Ship Agency
               </Link>
-              <Link href="/gallery" className="flex items-center gap-2 p-3 font-semibold text-accent hover:bg-orange-50 rounded-lg">
-                <Images className="w-4 h-4" /> Gallery
-              </Link>
               <Link href="/global-network" className="block p-3 font-medium text-gray-900 hover:bg-gray-50 rounded-lg">Global Network</Link>
-              <Link href="/blog" className="block p-3 font-medium text-gray-900 hover:bg-gray-50 rounded-lg">Blog</Link>
               <Link href="/faq" className="block p-3 font-medium text-gray-900 hover:bg-gray-50 rounded-lg">FAQ</Link>
               <Link href="/careers" className="block p-3 font-medium text-gray-900 hover:bg-gray-50 rounded-lg">Careers</Link>
               <Link href="/contact" className="block p-3 font-medium text-gray-900 hover:bg-gray-50 rounded-lg">Contact</Link>
+            </div>
+
+            <div className="border-t border-gray-100 pt-2">
+              <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2 mt-2">Media</p>
+              <Link href="/blog" className="flex items-center gap-3 p-3 font-medium text-gray-900 hover:bg-gray-50 rounded-lg">
+                <BookOpen className="w-4 h-4 text-secondary" /> Blog
+              </Link>
+              <Link href="/gallery" className="flex items-center gap-3 p-3 font-medium text-gray-900 hover:bg-gray-50 rounded-lg">
+                <Images className="w-4 h-4 text-secondary" /> Gallery
+              </Link>
             </div>
 
             <div className="pt-3 space-y-2 border-t border-gray-100 mt-2">
