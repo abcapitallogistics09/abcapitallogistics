@@ -1,6 +1,6 @@
 import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
-import { db, quotesTable, contactsTable, blogPostsTable, jobsTable } from "@workspace/db";
-import { desc, count, gte, eq, and } from "drizzle-orm";
+import { db, quotesTable, contactsTable, blogPostsTable, jobsTable, galleryItemsTable } from "@workspace/db";
+import { desc, count, gte, eq, and, asc } from "drizzle-orm";
 import { createSession, validateSession, destroySession } from "../lib/adminSession";
 
 const router: IRouter = Router();
@@ -261,3 +261,63 @@ router.get("/jobs", async (_req: Request, res: Response): Promise<void> => {
 });
 
 export default router;
+
+// ─── Gallery Items ─────────────────────────────────────────────────────────────
+
+router.get("/admin/gallery-items", requireAdmin, async (_req: Request, res: Response): Promise<void> => {
+  const items = await db.select().from(galleryItemsTable).orderBy(asc(galleryItemsTable.sortOrder), desc(galleryItemsTable.createdAt));
+  res.json(items);
+});
+
+router.get("/admin/gallery-items/:id", requireAdmin, async (req: Request, res: Response): Promise<void> => {
+  const [item] = await db.select().from(galleryItemsTable).where(eq(galleryItemsTable.id, parseInt(String(req.params["id"]))));
+  if (!item) { res.status(404).json({ error: "Not found" }); return; }
+  res.json(item);
+});
+
+router.post("/admin/gallery-items", requireAdmin, async (req: Request, res: Response): Promise<void> => {
+  const body = req.body as {
+    title: string; category: string; mediaType?: string; url: string;
+    thumbUrl?: string | null; location?: string | null; sortOrder?: number; published?: boolean;
+  };
+  const [item] = await db.insert(galleryItemsTable).values({
+    title: body.title,
+    category: body.category,
+    mediaType: body.mediaType ?? "image",
+    url: body.url,
+    thumbUrl: body.thumbUrl ?? null,
+    location: body.location ?? null,
+    sortOrder: body.sortOrder ?? 0,
+    published: body.published ?? true,
+  }).returning();
+  res.status(201).json(item);
+});
+
+router.put("/admin/gallery-items/:id", requireAdmin, async (req: Request, res: Response): Promise<void> => {
+  const id = parseInt(String(req.params["id"]));
+  const body = req.body as Partial<{
+    title: string; category: string; mediaType: string; url: string;
+    thumbUrl: string | null; location: string | null; sortOrder: number; published: boolean;
+  }>;
+  const [item] = await db.update(galleryItemsTable)
+    .set({ ...body, updatedAt: new Date() })
+    .where(eq(galleryItemsTable.id, id))
+    .returning();
+  if (!item) { res.status(404).json({ error: "Not found" }); return; }
+  res.json(item);
+});
+
+router.delete("/admin/gallery-items/:id", requireAdmin, async (req: Request, res: Response): Promise<void> => {
+  const id = parseInt(String(req.params["id"]));
+  await db.delete(galleryItemsTable).where(eq(galleryItemsTable.id, id));
+  res.status(204).send();
+});
+
+// ─── Public gallery ────────────────────────────────────────────────────────────
+
+router.get("/gallery-items", async (_req: Request, res: Response): Promise<void> => {
+  const items = await db.select().from(galleryItemsTable)
+    .where(eq(galleryItemsTable.published, true))
+    .orderBy(asc(galleryItemsTable.sortOrder), desc(galleryItemsTable.createdAt));
+  res.json(items);
+});

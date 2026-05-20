@@ -19,3 +19,5 @@ export * from './quoteResponse';
 export * from './trackingEvent';
 export * from './trackingResult';
 export * from './trackingResultStatus';
+export * from './uploadUrlRequest';
+export * from './uploadUrlResponse';

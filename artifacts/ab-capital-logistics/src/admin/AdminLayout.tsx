@@ -1,5 +1,5 @@
 import { useLocation } from "wouter";
-import { LayoutDashboard, FileText, Mail, Briefcase, Newspaper, LogOut, ChevronRight, Package } from "lucide-react";
+import { LayoutDashboard, FileText, Mail, Briefcase, Newspaper, LogOut, ChevronRight, Package, Images } from "lucide-react";
 import { useAdminAuth } from "./useAdminAuth";
 
 const navItems = [
@@ -7,6 +7,7 @@ const navItems = [
   { href: "/admin/quotes", label: "Quote Requests", icon: FileText },
   { href: "/admin/contacts", label: "Contact Messages", icon: Mail },
   { href: "/admin/blog", label: "Blog Posts", icon: Newspaper },
+  { href: "/admin/gallery", label: "Gallery", icon: Images },
   { href: "/admin/jobs", label: "Job Listings", icon: Briefcase },
 ];
 

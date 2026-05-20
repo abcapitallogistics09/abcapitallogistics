@@ -9,6 +9,8 @@ import AdminBlog from "./AdminBlog";
 import AdminBlogEdit from "./AdminBlogEdit";
 import AdminJobs from "./AdminJobs";
 import AdminJobEdit from "./AdminJobEdit";
+import AdminGallery from "./AdminGallery";
+import AdminGalleryEdit from "./AdminGalleryEdit";
 
 export default function AdminApp() {
   const { user, isLoading } = useAdminAuth();
@@ -38,12 +40,17 @@ export default function AdminApp() {
     if (location === "/admin/blog/new") return <AdminBlogEdit />;
     if (location === "/admin/jobs") return <AdminJobs />;
     if (location === "/admin/jobs/new") return <AdminJobEdit />;
+    if (location === "/admin/gallery") return <AdminGallery />;
+    if (location === "/admin/gallery/new") return <AdminGalleryEdit />;
 
     const blogEditMatch = location.match(/^\/admin\/blog\/(\d+)\/edit$/);
     if (blogEditMatch) return <AdminBlogEdit id={blogEditMatch[1]} />;
 
     const jobEditMatch = location.match(/^\/admin\/jobs\/(\d+)\/edit$/);
     if (jobEditMatch) return <AdminJobEdit id={jobEditMatch[1]} />;
+
+    const galleryEditMatch = location.match(/^\/admin\/gallery\/(\d+)\/edit$/);
+    if (galleryEditMatch) return <AdminGalleryEdit id={galleryEditMatch[1]} />;
 
     return <AdminDashboard />;
   };
