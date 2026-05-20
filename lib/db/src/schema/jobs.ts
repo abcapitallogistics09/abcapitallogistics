@@ -13,6 +13,12 @@ export const jobsTable = pgTable("jobs", {
   active: boolean("active").notNull().default(true),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  // Extended fields
+  salary: text("salary"),
+  experienceLevel: text("experience_level"),
+  applicationEmail: text("application_email"),
+  closingDate: text("closing_date"),
+  benefits: text("benefits"),
 });
 
 export const insertJobSchema = createInsertSchema(jobsTable).omit({

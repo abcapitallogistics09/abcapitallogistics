@@ -121,7 +121,7 @@ const serviceData: Record<ServiceKey, {
     process: [
       { step: "01", title: "Document Submission", desc: "You provide us with commercial invoice, bill of lading/airway bill, packing list, and any applicable permits." },
       { step: "02", title: "Classification & Assessment", desc: "We classify your goods under the correct HS tariff codes and calculate applicable duties and taxes." },
-      { step: "03", title: "Declaration Filing", dest: "", desc: "We file the import/export declaration with Cameroonian customs electronically." },
+      { step: "03", title: "Declaration Filing", desc: "We file the import/export declaration with Cameroonian customs electronically." },
       { step: "04", title: "Inspection (if required)", desc: "We coordinate any required physical inspections, Cotecna or BIVAC verifications, and comply with all regulatory requirements." },
       { step: "05", title: "Release & Delivery", desc: "Once cleared, we arrange port release and inland transport to your warehouse or final destination." },
     ],

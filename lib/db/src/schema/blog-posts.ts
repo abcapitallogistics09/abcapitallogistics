@@ -17,6 +17,13 @@ export const blogPostsTable = pgTable("blog_posts", {
   publishedAt: timestamp("published_at").defaultNow().notNull(),
   createdAt: timestamp("created_at").defaultNow().notNull(),
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
+  // SEO fields
+  metaTitle: text("meta_title"),
+  metaDescription: text("meta_description"),
+  focusKeyword: text("focus_keyword"),
+  canonicalUrl: text("canonical_url"),
+  ogImageUrl: text("og_image_url"),
+  tags: text("tags"),
 });
 
 export const insertBlogPostSchema = createInsertSchema(blogPostsTable).omit({

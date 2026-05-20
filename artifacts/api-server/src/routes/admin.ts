@@ -100,7 +100,8 @@ router.get("/admin/blog-posts", requireAdmin, async (_req: Request, res: Respons
 });
 
 router.post("/admin/blog-posts", requireAdmin, async (req: Request, res: Response): Promise<void> => {
-  const { slug, title, category, excerpt, content, author, readTime, imageUrl, featured, published } = req.body as Record<string, unknown>;
+  const { slug, title, category, excerpt, content, author, readTime, imageUrl, featured, published,
+    metaTitle, metaDescription, focusKeyword, canonicalUrl, ogImageUrl, tags } = req.body as Record<string, unknown>;
   if (!slug || !title || !category || !excerpt || !content) {
     res.status(400).json({ error: "slug, title, category, excerpt, and content are required" });
     return;
@@ -116,15 +117,22 @@ router.post("/admin/blog-posts", requireAdmin, async (req: Request, res: Respons
     imageUrl: imageUrl ? String(imageUrl) : null,
     featured: Boolean(featured ?? false),
     published: Boolean(published ?? true),
+    metaTitle: metaTitle ? String(metaTitle) : null,
+    metaDescription: metaDescription ? String(metaDescription) : null,
+    focusKeyword: focusKeyword ? String(focusKeyword) : null,
+    canonicalUrl: canonicalUrl ? String(canonicalUrl) : null,
+    ogImageUrl: ogImageUrl ? String(ogImageUrl) : null,
+    tags: tags ? String(tags) : null,
   }).returning();
   req.log.info({ id: post?.id }, "Blog post created");
   res.status(201).json(post);
 });
 
 router.put("/admin/blog-posts/:id", requireAdmin, async (req: Request, res: Response): Promise<void> => {
-  const id = parseInt(req.params["id"] ?? "");
+  const id = parseInt(String(req.params["id"] ?? ""));
   if (isNaN(id)) { res.status(400).json({ error: "Invalid id" }); return; }
-  const { slug, title, category, excerpt, content, author, readTime, imageUrl, featured, published } = req.body as Record<string, unknown>;
+  const { slug, title, category, excerpt, content, author, readTime, imageUrl, featured, published,
+    metaTitle, metaDescription, focusKeyword, canonicalUrl, ogImageUrl, tags } = req.body as Record<string, unknown>;
   const [post] = await db.update(blogPostsTable)
     .set({
       slug: slug ? String(slug) : undefined,
@@ -137,6 +145,12 @@ router.put("/admin/blog-posts/:id", requireAdmin, async (req: Request, res: Resp
       imageUrl: imageUrl !== undefined ? (imageUrl ? String(imageUrl) : null) : undefined,
       featured: featured !== undefined ? Boolean(featured) : undefined,
       published: published !== undefined ? Boolean(published) : undefined,
+      metaTitle: metaTitle !== undefined ? (metaTitle ? String(metaTitle) : null) : undefined,
+      metaDescription: metaDescription !== undefined ? (metaDescription ? String(metaDescription) : null) : undefined,
+      focusKeyword: focusKeyword !== undefined ? (focusKeyword ? String(focusKeyword) : null) : undefined,
+      canonicalUrl: canonicalUrl !== undefined ? (canonicalUrl ? String(canonicalUrl) : null) : undefined,
+      ogImageUrl: ogImageUrl !== undefined ? (ogImageUrl ? String(ogImageUrl) : null) : undefined,
+      tags: tags !== undefined ? (tags ? String(tags) : null) : undefined,
       updatedAt: new Date(),
     })
     .where(eq(blogPostsTable.id, id))
@@ -146,7 +160,7 @@ router.put("/admin/blog-posts/:id", requireAdmin, async (req: Request, res: Resp
 });
 
 router.delete("/admin/blog-posts/:id", requireAdmin, async (req: Request, res: Response): Promise<void> => {
-  const id = parseInt(req.params["id"] ?? "");
+  const id = parseInt(String(req.params["id"] ?? ""));
   if (isNaN(id)) { res.status(400).json({ error: "Invalid id" }); return; }
   await db.delete(blogPostsTable).where(eq(blogPostsTable.id, id));
   res.json({ success: true });
@@ -158,7 +172,8 @@ router.get("/admin/jobs", requireAdmin, async (_req: Request, res: Response): Pr
 });
 
 router.post("/admin/jobs", requireAdmin, async (req: Request, res: Response): Promise<void> => {
-  const { title, type, location, department, description, requirements, active } = req.body as Record<string, unknown>;
+  const { title, type, location, department, description, requirements, active,
+    salary, experienceLevel, applicationEmail, closingDate, benefits } = req.body as Record<string, unknown>;
   if (!title || !location || !department || !description) {
     res.status(400).json({ error: "title, location, department, and description are required" });
     return;
@@ -171,15 +186,21 @@ router.post("/admin/jobs", requireAdmin, async (req: Request, res: Response): Pr
     description: String(description),
     requirements: requirements ? String(requirements) : "",
     active: Boolean(active ?? true),
+    salary: salary ? String(salary) : null,
+    experienceLevel: experienceLevel ? String(experienceLevel) : null,
+    applicationEmail: applicationEmail ? String(applicationEmail) : null,
+    closingDate: closingDate ? String(closingDate) : null,
+    benefits: benefits ? String(benefits) : null,
   }).returning();
   req.log.info({ id: job?.id }, "Job created");
   res.status(201).json(job);
 });
 
 router.put("/admin/jobs/:id", requireAdmin, async (req: Request, res: Response): Promise<void> => {
-  const id = parseInt(req.params["id"] ?? "");
+  const id = parseInt(String(req.params["id"] ?? ""));
   if (isNaN(id)) { res.status(400).json({ error: "Invalid id" }); return; }
-  const { title, type, location, department, description, requirements, active } = req.body as Record<string, unknown>;
+  const { title, type, location, department, description, requirements, active,
+    salary, experienceLevel, applicationEmail, closingDate, benefits } = req.body as Record<string, unknown>;
   const [job] = await db.update(jobsTable)
     .set({
       title: title ? String(title) : undefined,
@@ -189,6 +210,11 @@ router.put("/admin/jobs/:id", requireAdmin, async (req: Request, res: Response):
       description: description ? String(description) : undefined,
       requirements: requirements !== undefined ? String(requirements) : undefined,
       active: active !== undefined ? Boolean(active) : undefined,
+      salary: salary !== undefined ? (salary ? String(salary) : null) : undefined,
+      experienceLevel: experienceLevel !== undefined ? (experienceLevel ? String(experienceLevel) : null) : undefined,
+      applicationEmail: applicationEmail !== undefined ? (applicationEmail ? String(applicationEmail) : null) : undefined,
+      closingDate: closingDate !== undefined ? (closingDate ? String(closingDate) : null) : undefined,
+      benefits: benefits !== undefined ? (benefits ? String(benefits) : null) : undefined,
       updatedAt: new Date(),
     })
     .where(eq(jobsTable.id, id))
@@ -198,7 +224,7 @@ router.put("/admin/jobs/:id", requireAdmin, async (req: Request, res: Response):
 });
 
 router.delete("/admin/jobs/:id", requireAdmin, async (req: Request, res: Response): Promise<void> => {
-  const id = parseInt(req.params["id"] ?? "");
+  const id = parseInt(String(req.params["id"] ?? ""));
   if (isNaN(id)) { res.status(400).json({ error: "Invalid id" }); return; }
   await db.delete(jobsTable).where(eq(jobsTable.id, id));
   res.json({ success: true });
@@ -224,7 +250,7 @@ router.get("/blog", async (_req: Request, res: Response): Promise<void> => {
 
 router.get("/blog/:slug", async (req: Request, res: Response): Promise<void> => {
   const [post] = await db.select().from(blogPostsTable)
-    .where(and(eq(blogPostsTable.slug, req.params["slug"] ?? ""), eq(blogPostsTable.published, true)));
+    .where(and(eq(blogPostsTable.slug, String(req.params["slug"] ?? "")), eq(blogPostsTable.published, true)));
   if (!post) { res.status(404).json({ error: "Not found" }); return; }
   res.json(post);
 });
