@@ -1,5 +1,5 @@
 import { useLocation } from "wouter";
-import { LayoutDashboard, FileText, Mail, Briefcase, Newspaper, LogOut, ChevronRight, Package, Images } from "lucide-react";
+import { LayoutDashboard, FileText, Mail, Briefcase, Newspaper, LogOut, ChevronRight, Package, Images, MessageCircle, Brain } from "lucide-react";
 import { useAdminAuth } from "./useAdminAuth";
 
 const navItems = [
@@ -9,6 +9,11 @@ const navItems = [
   { href: "/admin/blog", label: "Blog Posts", icon: Newspaper },
   { href: "/admin/gallery", label: "Gallery", icon: Images },
   { href: "/admin/jobs", label: "Job Listings", icon: Briefcase },
+];
+
+const aiNavItems = [
+  { href: "/admin/ai/conversations", label: "AI Conversations", icon: MessageCircle },
+  { href: "/admin/ai/training", label: "AI Training", icon: Brain },
 ];
 
 export default function AdminLayout({ children }: { children: React.ReactNode }) {
@@ -38,9 +43,32 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         </div>
 
         {/* Nav */}
-        <nav className="flex-1 p-4 space-y-1">
+        <nav className="flex-1 p-4 space-y-1 overflow-y-auto">
           {navItems.map(({ href, label, icon: Icon, exact }) => {
             const isActive = exact ? location === href : location.startsWith(href);
+            return (
+              <button
+                key={href}
+                onClick={() => setLocation(href)}
+                className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left ${
+                  isActive
+                    ? "bg-[#00AEEF] text-white"
+                    : "text-blue-200 hover:bg-white/10 hover:text-white"
+                }`}
+              >
+                <Icon className="w-4 h-4 shrink-0" />
+                {label}
+                {isActive && <ChevronRight className="w-3 h-3 ml-auto" />}
+              </button>
+            );
+          })}
+
+          {/* AI section */}
+          <div className="pt-3 pb-1">
+            <p className="px-3 text-[10px] uppercase tracking-widest font-semibold text-blue-400/70 mb-1">AI Assistant</p>
+          </div>
+          {aiNavItems.map(({ href, label, icon: Icon }) => {
+            const isActive = location.startsWith(href);
             return (
               <button
                 key={href}
@@ -62,7 +90,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* User */}
         <div className="p-4 border-t border-white/10">
           <div className="flex items-center gap-3 mb-3">
-            <div className="w-8 h-8 rounded-full bg-accent/20 flex items-center justify-center text-accent font-bold text-sm">
+            <div className="w-8 h-8 rounded-full bg-[#00AEEF]/20 flex items-center justify-center text-[#00AEEF] font-bold text-sm">
               {user?.username?.[0]?.toUpperCase() ?? "A"}
             </div>
             <div className="min-w-0">

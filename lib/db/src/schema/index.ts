@@ -5,3 +5,5 @@ export * from "./messages";
 export * from "./blog-posts";
 export * from "./jobs";
 export * from "./gallery-items";
+export * from "./ai-settings";
+export * from "./ai-knowledge";

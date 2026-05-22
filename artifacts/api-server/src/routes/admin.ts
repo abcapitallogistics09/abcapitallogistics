@@ -1,6 +1,6 @@
 import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
-import { db, quotesTable, contactsTable, blogPostsTable, jobsTable, galleryItemsTable } from "@workspace/db";
-import { desc, count, gte, eq, and, asc } from "drizzle-orm";
+import { db, quotesTable, contactsTable, blogPostsTable, jobsTable, galleryItemsTable, conversations, messages, aiSettings, aiKnowledge } from "@workspace/db";
+import { desc, count, gte, eq, and, asc, sql } from "drizzle-orm";
 import { createSession, validateSession, destroySession } from "../lib/adminSession";
 
 const router: IRouter = Router();
@@ -320,4 +320,127 @@ router.get("/gallery-items", async (_req: Request, res: Response): Promise<void>
     .where(eq(galleryItemsTable.published, true))
     .orderBy(asc(galleryItemsTable.sortOrder), desc(galleryItemsTable.createdAt));
   res.json(items);
+});
+
+// ─── AI Conversations ──────────────────────────────────────────────────────────
+
+router.get("/admin/ai/conversations", requireAdmin, async (_req: Request, res: Response): Promise<void> => {
+  const rows = await db
+    .select({
+      id: conversations.id,
+      title: conversations.title,
+      createdAt: conversations.createdAt,
+      messageCount: count(messages.id),
+    })
+    .from(conversations)
+    .leftJoin(messages, eq(messages.conversationId, conversations.id))
+    .groupBy(conversations.id)
+    .orderBy(desc(conversations.createdAt));
+
+  // Fetch first user message per conversation
+  const firstMsgs = await db
+    .select({ conversationId: messages.conversationId, content: messages.content })
+    .from(messages)
+    .where(eq(messages.role, "user"))
+    .orderBy(asc(messages.createdAt));
+
+  const firstByConv = new Map<number, string>();
+  for (const m of firstMsgs) {
+    if (!firstByConv.has(m.conversationId)) firstByConv.set(m.conversationId, m.content);
+  }
+
+  res.json(rows.map((r) => ({ ...r, firstUserMessage: firstByConv.get(r.id) ?? null })));
+});
+
+router.get("/admin/ai/conversations/:id", requireAdmin, async (req: Request, res: Response): Promise<void> => {
+  const id = parseInt(String(req.params["id"]));
+  const [conv] = await db.select().from(conversations).where(eq(conversations.id, id));
+  if (!conv) { res.status(404).json({ error: "Not found" }); return; }
+  const msgs = await db.select().from(messages).where(eq(messages.conversationId, id)).orderBy(asc(messages.createdAt));
+  res.json({ ...conv, messages: msgs });
+});
+
+router.delete("/admin/ai/conversations/:id", requireAdmin, async (req: Request, res: Response): Promise<void> => {
+  const id = parseInt(String(req.params["id"]));
+  await db.delete(conversations).where(eq(conversations.id, id));
+  res.status(204).send();
+});
+
+// ─── AI Settings ───────────────────────────────────────────────────────────────
+
+const DEFAULT_SYSTEM_PROMPT = `You are the AI logistics assistant for AB Capital Logistics, a premier freight forwarding company based in Douala, Cameroon, serving Central Africa and beyond.
+
+Your role is to help visitors with:
+- Information about services: Air Freight, Ocean Freight, Road Freight, Customs Clearance, Warehousing, 3PL Solutions, and Ship Agency
+- Shipping routes, transit times, and trade lanes (especially Cameroon, Central Africa, Dubai, China, Europe)
+- Customs procedures and documentation for imports/exports through Douala Port
+- Getting a freight quote (direct them to /quote or offer to collect details)
+- Shipment tracking (direct them to /tracking with tracking number ABCL-XXXX format)
+- Contact and office information:
+  - Address: 3MGF+F5M Bonabéri, Douala, Cameroon
+  - Phone: +237 677-238-818
+  - Email: info@abcapitallogistics.com
+  - WhatsApp: +237 677-238-818
+- Industries served: Oil & Gas, FMCG, Telecom, Agriculture, Mining, Healthcare, Retail, Manufacturing, Construction
+
+Be warm, professional, and concise. If you don't know something specific (like real-time rates), acknowledge it and offer to connect them with the team via WhatsApp or the contact form. Always offer to help with related logistics questions. Keep responses focused and practical — this is a business context.
+
+When users want a quote, ask for: origin, destination, freight type (air/sea/road), cargo description, and approximate weight/volume.`;
+
+router.get("/admin/ai/settings", requireAdmin, async (_req: Request, res: Response): Promise<void> => {
+  const [row] = await db.select().from(aiSettings).where(eq(aiSettings.key, "system_prompt"));
+  res.json({ systemPrompt: row?.value ?? DEFAULT_SYSTEM_PROMPT });
+});
+
+router.put("/admin/ai/settings", requireAdmin, async (req: Request, res: Response): Promise<void> => {
+  const { systemPrompt } = req.body as { systemPrompt: string };
+  if (typeof systemPrompt !== "string") { res.status(400).json({ error: "systemPrompt required" }); return; }
+  await db
+    .insert(aiSettings)
+    .values({ key: "system_prompt", value: systemPrompt })
+    .onConflictDoUpdate({ target: aiSettings.key, set: { value: systemPrompt, updatedAt: new Date() } });
+  res.json({ success: true });
+});
+
+// ─── AI Knowledge Base ─────────────────────────────────────────────────────────
+
+router.get("/admin/ai/knowledge", requireAdmin, async (_req: Request, res: Response): Promise<void> => {
+  const entries = await db.select().from(aiKnowledge).orderBy(asc(aiKnowledge.category), desc(aiKnowledge.createdAt));
+  res.json(entries);
+});
+
+router.post("/admin/ai/knowledge", requireAdmin, async (req: Request, res: Response): Promise<void> => {
+  const body = req.body as { category?: string; question: string; answer: string; active?: boolean };
+  const [entry] = await db.insert(aiKnowledge).values({
+    category: body.category ?? "General",
+    question: body.question,
+    answer: body.answer,
+    active: body.active ?? true,
+  }).returning();
+  res.status(201).json(entry);
+});
+
+router.put("/admin/ai/knowledge/:id", requireAdmin, async (req: Request, res: Response): Promise<void> => {
+  const id = parseInt(String(req.params["id"]));
+  const body = req.body as Partial<{ category: string; question: string; answer: string; active: boolean }>;
+  const [entry] = await db.update(aiKnowledge)
+    .set({ ...body, updatedAt: new Date() })
+    .where(eq(aiKnowledge.id, id))
+    .returning();
+  if (!entry) { res.status(404).json({ error: "Not found" }); return; }
+  res.json(entry);
+});
+
+router.delete("/admin/ai/knowledge/:id", requireAdmin, async (req: Request, res: Response): Promise<void> => {
+  const id = parseInt(String(req.params["id"]));
+  await db.delete(aiKnowledge).where(eq(aiKnowledge.id, id));
+  res.status(204).send();
+});
+
+// ─── Public: AI settings for openai route ─────────────────────────────────────
+
+router.get("/ai/system-context", async (_req: Request, res: Response): Promise<void> => {
+  const [promptRow] = await db.select().from(aiSettings).where(eq(aiSettings.key, "system_prompt"));
+  const knowledgeRows = await db.select().from(aiKnowledge).where(eq(aiKnowledge.active, true)).orderBy(asc(aiKnowledge.category));
+  res.json({ systemPrompt: promptRow?.value ?? null, knowledge: knowledgeRows });
 });

@@ -1,13 +1,13 @@
 import { Router } from "express";
 import { db } from "@workspace/db";
-import { conversations, messages } from "@workspace/db";
+import { conversations, messages, aiSettings, aiKnowledge } from "@workspace/db";
 import { openai } from "@workspace/integrations-openai-ai-server";
-import { eq } from "drizzle-orm";
+import { eq, asc } from "drizzle-orm";
 import { CreateOpenaiConversationBody, SendOpenaiMessageBody } from "@workspace/api-zod";
 
 const router = Router();
 
-const SYSTEM_PROMPT = `You are the AI logistics assistant for AB Capital Logistics, a premier freight forwarding company based in Douala, Cameroon, serving Central Africa and beyond.
+const DEFAULT_SYSTEM_PROMPT = `You are the AI logistics assistant for AB Capital Logistics, a premier freight forwarding company based in Douala, Cameroon, serving Central Africa and beyond.
 
 Your role is to help visitors with:
 - Information about services: Air Freight, Ocean Freight, Road Freight, Customs Clearance, Warehousing, 3PL Solutions, and Ship Agency
@@ -25,6 +25,29 @@ Your role is to help visitors with:
 Be warm, professional, and concise. If you don't know something specific (like real-time rates), acknowledge it and offer to connect them with the team via WhatsApp or the contact form. Always offer to help with related logistics questions. Keep responses focused and practical — this is a business context.
 
 When users want a quote, ask for: origin, destination, freight type (air/sea/road), cargo description, and approximate weight/volume.`;
+
+async function buildSystemPrompt(): Promise<string> {
+  try {
+    const [promptRow] = await db.select().from(aiSettings).where(eq(aiSettings.key, "system_prompt"));
+    const basePrompt = promptRow?.value ?? DEFAULT_SYSTEM_PROMPT;
+
+    const knowledgeRows = await db
+      .select()
+      .from(aiKnowledge)
+      .where(eq(aiKnowledge.active, true))
+      .orderBy(asc(aiKnowledge.category));
+
+    if (knowledgeRows.length === 0) return basePrompt;
+
+    const knowledgeBlock = knowledgeRows
+      .map((k) => `Q: ${k.question}\nA: ${k.answer}`)
+      .join("\n\n");
+
+    return `${basePrompt}\n\n--- ADDITIONAL KNOWLEDGE BASE ---\nUse the following company-specific Q&A to give accurate, detailed answers:\n\n${knowledgeBlock}`;
+  } catch {
+    return DEFAULT_SYSTEM_PROMPT;
+  }
+}
 
 router.post("/openai/conversations", async (req, res) => {
   const parsed = CreateOpenaiConversationBody.safeParse(req.body);
@@ -75,8 +98,10 @@ router.post("/openai/conversations/:id/messages", async (req, res) => {
     .where(eq(messages.conversationId, id))
     .orderBy(messages.createdAt);
 
+  const systemPrompt = await buildSystemPrompt();
+
   const chatMessages = [
-    { role: "system" as const, content: SYSTEM_PROMPT },
+    { role: "system" as const, content: systemPrompt },
     ...history.map((m) => ({
       role: m.role as "user" | "assistant",
       content: m.content,
