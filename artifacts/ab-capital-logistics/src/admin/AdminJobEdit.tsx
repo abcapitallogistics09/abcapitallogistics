@@ -316,7 +316,7 @@ export default function AdminJobEdit({ id }: { id?: string }) {
                   </div>
                   <div className="flex items-center gap-3 mt-2 text-xs text-gray-500">
                     <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{form.location}</span>
-                    {form.salary && <span className="text-[#F28C28] font-medium flex items-center gap-1"><DollarSign className="w-3 h-3" />{form.salary}</span>}
+                    {form.salary && <span className="text-[#00AEEF] font-medium flex items-center gap-1"><DollarSign className="w-3 h-3" />{form.salary}</span>}
                     {form.closingDate && <span className="flex items-center gap-1 text-red-500"><Calendar className="w-3 h-3" />Closes {form.closingDate}</span>}
                   </div>
                   {form.description && <p className="text-xs text-gray-600 mt-2 line-clamp-2">{form.description}</p>}

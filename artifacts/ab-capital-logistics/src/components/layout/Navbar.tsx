@@ -233,7 +233,7 @@ export function Navbar() {
               <p className="px-3 text-xs font-semibold text-gray-400 uppercase tracking-wide mb-2 mt-2">Company</p>
               <Link href="/about" className="block p-3 font-medium text-gray-900 hover:bg-gray-50 rounded-lg">About Us</Link>
               <Link href="/industries" className="block p-3 font-medium text-gray-900 hover:bg-gray-50 rounded-lg">Industries</Link>
-              <Link href="/ship-agency" className="flex items-center gap-2 p-3 font-semibold text-accent hover:bg-orange-50 rounded-lg">
+              <Link href="/ship-agency" className="flex items-center gap-2 p-3 font-semibold text-accent hover:bg-sky-50 rounded-lg">
                 <Anchor className="w-4 h-4" /> Ship Agency
               </Link>
               <Link href="/global-network" className="block p-3 font-medium text-gray-900 hover:bg-gray-50 rounded-lg">Global Network</Link>

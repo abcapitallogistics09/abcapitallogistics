@@ -27,7 +27,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
         {/* Logo */}
         <div className="p-6 border-b border-white/10">
           <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-lg bg-[#F28C28] flex items-center justify-center">
+            <div className="w-9 h-9 rounded-lg bg-[#00AEEF] flex items-center justify-center">
               <Package className="w-5 h-5 text-white" />
             </div>
             <div>
@@ -47,7 +47,7 @@ export default function AdminLayout({ children }: { children: React.ReactNode })
                 onClick={() => setLocation(href)}
                 className={`w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors text-left ${
                   isActive
-                    ? "bg-[#F28C28] text-white"
+                    ? "bg-[#00AEEF] text-white"
                     : "text-blue-200 hover:bg-white/10 hover:text-white"
                 }`}
               >

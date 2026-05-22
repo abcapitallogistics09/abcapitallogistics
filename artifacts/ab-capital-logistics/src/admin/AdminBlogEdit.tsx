@@ -315,7 +315,7 @@ export default function AdminBlogEdit({ id }: { id?: string }) {
   const wordCount = countWords(form.content);
 
   const scoreColor = seoScore >= 80 ? "text-emerald-600" : seoScore >= 55 ? "text-amber-600" : seoScore >= 30 ? "text-orange-600" : "text-red-600";
-  const scoreBg = seoScore >= 80 ? "bg-emerald-500" : seoScore >= 55 ? "bg-amber-500" : seoScore >= 30 ? "bg-orange-500" : "bg-red-500";
+  const scoreBg = seoScore >= 80 ? "bg-emerald-500" : seoScore >= 55 ? "bg-amber-500" : seoScore >= 30 ? "bg-sky-500" : "bg-red-500";
   const scoreLabel = seoScore >= 80 ? "Excellent" : seoScore >= 55 ? "Good" : seoScore >= 30 ? "Fair" : "Needs Work";
 
   const tabs: { id: Tab; label: string; icon: React.ReactNode; badge?: string }[] = [
@@ -707,12 +707,12 @@ export default function AdminBlogEdit({ id }: { id?: string }) {
                   </div>
                 </label>
 
-                <label className="flex items-start gap-3 cursor-pointer p-3 rounded-xl border border-gray-200 hover:border-[#F28C28] transition-colors">
+                <label className="flex items-start gap-3 cursor-pointer p-3 rounded-xl border border-gray-200 hover:border-[#00AEEF] transition-colors">
                   <input
                     type="checkbox"
                     checked={form.featured}
                     onChange={(e) => set("featured", e.target.checked)}
-                    className="mt-0.5 w-4 h-4 accent-[#F28C28]"
+                    className="mt-0.5 w-4 h-4 accent-[#00AEEF]"
                   />
                   <div>
                     <div className="text-sm font-medium text-gray-800">Featured Post</div>

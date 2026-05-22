@@ -168,7 +168,7 @@ export function ChatWidget() {
         </AnimatePresence>
         {/* Pulse ring */}
         {!open && (
-          <span className="absolute inset-0 rounded-full border-2 border-[#F28C28] animate-ping opacity-50" />
+          <span className="absolute inset-0 rounded-full border-2 border-[#00AEEF] animate-ping opacity-50" />
         )}
       </motion.button>
 
@@ -185,7 +185,7 @@ export function ChatWidget() {
           >
             {/* Header */}
             <div className="bg-[#0B1F3A] px-4 py-3 flex items-center gap-3 shrink-0">
-              <div className="w-9 h-9 rounded-full bg-[#F28C28] flex items-center justify-center shrink-0">
+              <div className="w-9 h-9 rounded-full bg-[#00AEEF] flex items-center justify-center shrink-0">
                 <Bot className="w-5 h-5 text-white" />
               </div>
               <div className="flex-1 min-w-0">
@@ -200,7 +200,7 @@ export function ChatWidget() {
               {messages.map((msg, i) => (
                 <div key={i} className={`flex gap-2 ${msg.role === "user" ? "flex-row-reverse" : "flex-row"}`}>
                   {/* Avatar */}
-                  <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${msg.role === "user" ? "bg-[#F28C28]" : "bg-[#0B1F3A]"}`}>
+                  <div className={`w-7 h-7 rounded-full flex items-center justify-center shrink-0 mt-0.5 ${msg.role === "user" ? "bg-[#00AEEF]" : "bg-[#0B1F3A]"}`}>
                     {msg.role === "user" ? (
                       <User className="w-3.5 h-3.5 text-white" />
                     ) : (

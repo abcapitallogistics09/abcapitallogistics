@@ -38,7 +38,7 @@ A world-class logistics and freight forwarding website for AB Capital Logistics 
 - Contract-first API: OpenAPI spec → generated Zod schemas + React Query hooks via Orval
 - Wouter for client-side routing (lightweight, no React Router dependency)
 - Framer Motion for all page/section animations (scroll-triggered with viewport: { once: true })
-- Brand colors: Primary Navy #0B1F3A (HSL 215 68% 14%), Secondary Blue #123D6B (HSL 211 71% 25%), Accent Orange #F28C28 (HSL 30 89% 55%)
+- Brand colors: Primary Navy #0B1F3A (HSL 215 68% 14%), Secondary Blue #123D6B (HSL 211 71% 25%), Accent Cyan #00AEEF (HSL 197 100% 47%)
 - Tracking data is demo-only (ABCL-DEMO-001/002/003) for the MVP; real data would come from a shipment management system
 - No auth layer for this site — it's a public marketing/transactional website
 
@@ -59,7 +59,7 @@ A world-class logistics and freight forwarding website for AB Capital Logistics 
 
 ## User preferences
 
-- Brand colors: Navy #0B1F3A, Blue #123D6B, Orange #F28C28
+- Brand colors: Navy #0B1F3A, Blue #123D6B, Cyan #00AEEF
 - Company contact: 3MGF+F5M Bonabéri, Douala, Cameroon | +237 677-238-818 | info@abcapitallogistics.com
 - All pages should have premium, world-class design with framer-motion animations
 

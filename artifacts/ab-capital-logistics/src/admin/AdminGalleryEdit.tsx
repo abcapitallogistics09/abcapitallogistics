@@ -212,7 +212,7 @@ export default function AdminGalleryEdit({ id }: { id?: string }) {
               </button>
               {uploadingMain && (
                 <div className="mt-2 h-1.5 bg-gray-100 rounded-full overflow-hidden">
-                  <div className="h-full bg-[#F28C28] transition-all duration-300 rounded-full" style={{ width: `${uploadProgress}%` }} />
+                  <div className="h-full bg-[#00AEEF] transition-all duration-300 rounded-full" style={{ width: `${uploadProgress}%` }} />
                 </div>
               )}
             </div>

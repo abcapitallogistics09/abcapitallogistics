@@ -50,7 +50,7 @@ export default function AdminDashboard() {
       icon: Briefcase,
       total: stats?.jobs.active ?? "—",
       sub: "Open positions",
-      color: "bg-orange-500",
+      color: "bg-sky-500",
       href: "/admin/jobs",
     },
   ];

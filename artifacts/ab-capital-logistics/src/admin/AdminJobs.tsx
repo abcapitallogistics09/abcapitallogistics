@@ -102,7 +102,7 @@ export default function AdminJobs() {
             { label: "Total Listings", value: jobs.length, color: "text-[#0B1F3A]" },
             { label: "Active / Open", value: active, color: "text-emerald-600" },
             { label: "Closed", value: jobs.length - active, color: "text-gray-500" },
-            { label: "Top Department", value: topDept ? topDept[0] : "—", color: "text-[#F28C28]" },
+            { label: "Top Department", value: topDept ? topDept[0] : "—", color: "text-[#00AEEF]" },
           ].map((s) => (
             <div key={s.label} className="bg-white rounded-xl border border-gray-200 p-4 shadow-sm">
               <div className={`text-xl font-bold ${s.color} truncate`}>{s.value}</div>
@@ -179,7 +179,7 @@ export default function AdminJobs() {
                       <span className="flex items-center gap-1"><Clock className="w-3 h-3" />{job.type}</span>
                       <span className="flex items-center gap-1"><MapPin className="w-3 h-3" />{job.location}</span>
                       {job.experienceLevel && <span>{job.experienceLevel}</span>}
-                      {job.salary && <span className="text-[#F28C28] font-medium">{job.salary}</span>}
+                      {job.salary && <span className="text-[#00AEEF] font-medium">{job.salary}</span>}
                       {job.closingDate && <span className="text-red-500">Closes: {job.closingDate}</span>}
                     </div>
                     <p className="text-xs text-gray-400 mt-1 line-clamp-1">{job.description}</p>

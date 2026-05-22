@@ -31,7 +31,7 @@ function seoScore(post: BlogPost): { score: number; label: string; color: string
   if (post.excerpt && post.excerpt.length > 80) score += 15;
   if (score >= 80) return { score, label: "Excellent", color: "text-emerald-700", bg: "bg-emerald-50" };
   if (score >= 55) return { score, label: "Good", color: "text-amber-700", bg: "bg-amber-50" };
-  if (score >= 30) return { score, label: "Fair", color: "text-orange-700", bg: "bg-orange-50" };
+  if (score >= 30) return { score, label: "Fair", color: "text-orange-700", bg: "bg-sky-50" };
   return { score, label: "Poor", color: "text-red-700", bg: "bg-red-50" };
 }
 
@@ -220,7 +220,7 @@ export default function AdminBlog() {
                       <button
                         onClick={() => window.open(`/blog/${post.slug}`, "_blank")}
                         title="View on site"
-                        className="p-1.5 rounded-lg text-gray-400 hover:text-[#F28C28] hover:bg-orange-50 transition-colors"
+                        className="p-1.5 rounded-lg text-gray-400 hover:text-[#00AEEF] hover:bg-sky-50 transition-colors"
                       >
                         <TrendingUp className="w-3.5 h-3.5" />
                       </button>

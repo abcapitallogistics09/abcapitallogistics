@@ -10,7 +10,7 @@ const statusConfig: Record<string, { label: string; color: string; icon: typeof 
   pending: { label: "Pending", color: "text-yellow-600 bg-yellow-50 border-yellow-200", icon: Clock },
   in_transit: { label: "In Transit", color: "text-blue-600 bg-blue-50 border-blue-200", icon: Truck },
   customs_clearance: { label: "Customs Clearance", color: "text-purple-600 bg-purple-50 border-purple-200", icon: Package },
-  out_for_delivery: { label: "Out for Delivery", color: "text-orange-600 bg-orange-50 border-orange-200", icon: Truck },
+  out_for_delivery: { label: "Out for Delivery", color: "text-orange-600 bg-sky-50 border-orange-200", icon: Truck },
   delivered: { label: "Delivered", color: "text-green-600 bg-green-50 border-green-200", icon: CheckCircle },
 };
 
