@@ -1,50 +1,75 @@
 import { Router, type IRouter, type Request, type Response, type NextFunction } from "express";
-import { db, quotesTable, contactsTable, blogPostsTable, jobsTable, galleryItemsTable, conversations, messages, aiSettings, aiKnowledge } from "@workspace/db";
+import { db, quotesTable, contactsTable, blogPostsTable, jobsTable, galleryItemsTable, conversations, messages, aiSettings, aiKnowledge, adminUsers } from "@workspace/db";
 import { desc, count, gte, eq, and, asc, sql } from "drizzle-orm";
-import { createSession, validateSession, destroySession } from "../lib/adminSession";
+import { createSession, getSession, validateSession, destroySession } from "../lib/adminSession";
+import { hashPassword, verifyPassword } from "../lib/passwordHash";
+
+// All assignable section keys (super_admin implicitly has everything)
+const ALL_SECTIONS = ["dashboard", "quotes_crm", "contacts", "blog", "gallery", "jobs", "quotations", "charges", "ai"];
+
+const ROLE_PERMISSIONS: Record<string, string[]> = {
+  admin: [...ALL_SECTIONS],
+  staff: ["dashboard", "quotes_crm", "contacts", "quotations"],
+};
 
 const router: IRouter = Router();
 
 function requireAdmin(req: Request, res: Response, next: NextFunction): void {
   const cookies = (req as Request & { cookies?: Record<string, string> }).cookies;
   const token = cookies?.["admin_session"];
-  if (!token || !validateSession(token)) {
+  const session = token ? getSession(token) : null;
+  if (!session) {
     res.status(401).json({ error: "Unauthorized" });
     return;
   }
+  (req as Request & { __adminSession?: typeof session }).__adminSession = session;
   next();
 }
 
-router.post("/admin/login", (req: Request, res: Response): void => {
-  const { username, password } = req.body as { username: string; password: string };
-  const ADMIN_USERNAME = process.env["ADMIN_USERNAME"];
-  const ADMIN_PASSWORD = process.env["ADMIN_PASSWORD"];
+function requireSuperAdmin(req: Request, res: Response, next: NextFunction): void {
+  const cookies = (req as Request & { cookies?: Record<string, string> }).cookies;
+  const token = cookies?.["admin_session"];
+  const session = token ? getSession(token) : null;
+  if (!session) { res.status(401).json({ error: "Unauthorized" }); return; }
+  if (session.role !== "super_admin") { res.status(403).json({ error: "Forbidden: Super admin only" }); return; }
+  next();
+}
 
-  if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
-    res.status(500).json({ error: "Admin credentials not configured. Set ADMIN_USERNAME and ADMIN_PASSWORD env vars." });
-    return;
-  }
+router.post("/admin/login", async (req: Request, res: Response): Promise<void> => {
+  const { username, password } = req.body as { username: string; password: string };
+  if (!username || !password) { res.status(400).json({ error: "Username and password required" }); return; }
 
   const inputUser = username.trim();
   const inputPass = password.trim();
-  // ADMIN_PASSWORD secret holds the username value, ADMIN_USERNAME holds the password value
-  // (they were entered in the wrong fields — swapped here to compensate)
-  const storedUser = ADMIN_PASSWORD.trim();
-  const storedPass = ADMIN_USERNAME.trim();
 
-  if (inputUser !== storedUser || inputPass !== storedPass) {
-    res.status(401).json({ error: "Invalid credentials" });
+  // ── 1. Check DB users first ──────────────────────────────────────────────
+  const [dbUser] = await db.select().from(adminUsers).where(eq(adminUsers.username, inputUser)).limit(1);
+  if (dbUser) {
+    if (!dbUser.active) { res.status(401).json({ error: "Account is disabled" }); return; }
+    if (!verifyPassword(inputPass, dbUser.passwordHash)) { res.status(401).json({ error: "Invalid credentials" }); return; }
+    const permissions: string[] = JSON.parse(dbUser.permissions) as string[];
+    const token = createSession({ username: dbUser.username, role: dbUser.role, permissions, userId: dbUser.id });
+    res.cookie("admin_session", token, { httpOnly: true, sameSite: "lax", maxAge: 24 * 60 * 60 * 1000, path: "/" });
+    req.log.info({ username: dbUser.username, role: dbUser.role }, "Admin (DB user) login");
+    res.json({ success: true });
     return;
   }
 
-  const token = createSession();
-  res.cookie("admin_session", token, {
-    httpOnly: true,
-    sameSite: "lax",
-    maxAge: 24 * 60 * 60 * 1000,
-    path: "/",
-  });
-  req.log.info({ username }, "Admin login");
+  // ── 2. Fall back to super_admin env vars ─────────────────────────────────
+  const ADMIN_USERNAME = process.env["ADMIN_USERNAME"];
+  const ADMIN_PASSWORD = process.env["ADMIN_PASSWORD"];
+  if (!ADMIN_USERNAME || !ADMIN_PASSWORD) {
+    res.status(500).json({ error: "Admin credentials not configured" }); return;
+  }
+  // ADMIN_PASSWORD holds the username; ADMIN_USERNAME holds the password (intentional swap)
+  const storedUser = ADMIN_PASSWORD.trim();
+  const storedPass = ADMIN_USERNAME.trim();
+  if (inputUser !== storedUser || inputPass !== storedPass) {
+    res.status(401).json({ error: "Invalid credentials" }); return;
+  }
+  const token = createSession({ username: storedUser, role: "super_admin", permissions: [...ALL_SECTIONS, "users"], userId: null });
+  res.cookie("admin_session", token, { httpOnly: true, sameSite: "lax", maxAge: 24 * 60 * 60 * 1000, path: "/" });
+  req.log.info({ username: storedUser }, "Super admin login");
   res.json({ success: true });
 });
 
@@ -59,11 +84,14 @@ router.post("/admin/logout", (req: Request, res: Response): void => {
 router.get("/admin/me", (req: Request, res: Response): void => {
   const cookies = (req as Request & { cookies?: Record<string, string> }).cookies;
   const token = cookies?.["admin_session"];
-  if (!token || !validateSession(token)) {
-    res.status(401).json({ error: "Unauthorized" });
-    return;
-  }
-  res.json({ authenticated: true, username: process.env["ADMIN_USERNAME"] });
+  const session = token ? getSession(token) : null;
+  if (!session) { res.status(401).json({ error: "Unauthorized" }); return; }
+  res.json({
+    authenticated: true,
+    username: session.username,
+    role: session.role,
+    permissions: session.permissions,
+  });
 });
 
 router.get("/admin/stats", requireAdmin, async (_req: Request, res: Response): Promise<void> => {
@@ -435,6 +463,67 @@ router.delete("/admin/ai/knowledge/:id", requireAdmin, async (req: Request, res:
   const id = parseInt(String(req.params["id"]));
   await db.delete(aiKnowledge).where(eq(aiKnowledge.id, id));
   res.status(204).send();
+});
+
+// ─── Admin Users CRUD (super_admin only) ───────────────────────────────────────
+
+router.get("/admin/users", requireSuperAdmin, async (_req: Request, res: Response): Promise<void> => {
+  const rows = await db.select({
+    id: adminUsers.id,
+    username: adminUsers.username,
+    email: adminUsers.email,
+    role: adminUsers.role,
+    permissions: adminUsers.permissions,
+    active: adminUsers.active,
+    createdAt: adminUsers.createdAt,
+  }).from(adminUsers).orderBy(desc(adminUsers.createdAt));
+  res.json(rows);
+});
+
+router.post("/admin/users", requireSuperAdmin, async (req: Request, res: Response): Promise<void> => {
+  const { username, email, password, role, permissions, active } = req.body as {
+    username: string; email?: string; password: string;
+    role: string; permissions: string; active?: boolean;
+  };
+  if (!username || !password) { res.status(400).json({ error: "Username and password are required" }); return; }
+  const [existing] = await db.select({ id: adminUsers.id }).from(adminUsers).where(eq(adminUsers.username, username)).limit(1);
+  if (existing) { res.status(409).json({ error: "Username already exists" }); return; }
+  const passwordHash = hashPassword(password);
+  const [created] = await db.insert(adminUsers).values({
+    username: username.trim(),
+    email: email?.trim() ?? null,
+    passwordHash,
+    role: role ?? "staff",
+    permissions: permissions ?? "[]",
+    active: active ?? true,
+  }).returning();
+  res.status(201).json(created);
+});
+
+router.put("/admin/users/:id", requireSuperAdmin, async (req: Request, res: Response): Promise<void> => {
+  const id = Number(req.params["id"]);
+  if (isNaN(id)) { res.status(400).json({ error: "Invalid id" }); return; }
+  const { username, email, password, role, permissions, active } = req.body as {
+    username?: string; email?: string; password?: string;
+    role?: string; permissions?: string; active?: boolean;
+  };
+  const updates: Record<string, unknown> = { updatedAt: new Date() };
+  if (username !== undefined) updates["username"] = username.trim();
+  if (email !== undefined) updates["email"] = email.trim() || null;
+  if (password) updates["passwordHash"] = hashPassword(password);
+  if (role !== undefined) updates["role"] = role;
+  if (permissions !== undefined) updates["permissions"] = permissions;
+  if (active !== undefined) updates["active"] = active;
+  const [updated] = await db.update(adminUsers).set(updates).where(eq(adminUsers.id, id)).returning();
+  if (!updated) { res.status(404).json({ error: "User not found" }); return; }
+  res.json(updated);
+});
+
+router.delete("/admin/users/:id", requireSuperAdmin, async (req: Request, res: Response): Promise<void> => {
+  const id = Number(req.params["id"]);
+  if (isNaN(id)) { res.status(400).json({ error: "Invalid id" }); return; }
+  await db.delete(adminUsers).where(eq(adminUsers.id, id));
+  res.json({ success: true });
 });
 
 // ─── Public: AI settings for openai route ─────────────────────────────────────

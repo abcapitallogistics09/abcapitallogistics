@@ -1,25 +1,43 @@
 import { randomBytes } from "crypto";
 
-const sessions = new Map<string, { createdAt: number }>();
+export interface SessionData {
+  createdAt: number;
+  username: string;
+  role: string; // super_admin | admin | staff | custom
+  permissions: string[]; // section keys
+  userId: number | null; // null for super_admin (env-var based)
+}
+
+const sessions = new Map<string, SessionData>();
 const SESSION_TTL = 24 * 60 * 60 * 1000;
 
-export function createSession(): string {
-  const token = randomBytes(32).toString("hex");
+function purgeExpired() {
   for (const [k, v] of sessions) {
     if (Date.now() - v.createdAt > SESSION_TTL) sessions.delete(k);
   }
-  sessions.set(token, { createdAt: Date.now() });
+}
+
+export function createSession(data: Omit<SessionData, "createdAt">): string {
+  purgeExpired();
+  const token = randomBytes(32).toString("hex");
+  sessions.set(token, { ...data, createdAt: Date.now() });
   return token;
 }
 
-export function validateSession(token: string): boolean {
+/** Returns session data or null if missing/expired. */
+export function getSession(token: string): SessionData | null {
   const session = sessions.get(token);
-  if (!session) return false;
+  if (!session) return null;
   if (Date.now() - session.createdAt > SESSION_TTL) {
     sessions.delete(token);
-    return false;
+    return null;
   }
-  return true;
+  return session;
+}
+
+/** Legacy boolean check — kept for backwards compatibility in other route files. */
+export function validateSession(token: string): boolean {
+  return getSession(token) !== null;
 }
 
 export function destroySession(token: string): void {

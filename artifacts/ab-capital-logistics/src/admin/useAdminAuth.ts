@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback } from "react";
 
-interface AdminUser {
+export interface AdminUser {
   username: string;
+  role: string; // super_admin | admin | staff | custom
+  permissions: string[];
 }
 
 export function useAdminAuth() {
@@ -11,8 +13,12 @@ export function useAdminAuth() {
   useEffect(() => {
     fetch("/api/admin/me", { credentials: "include" })
       .then((r) => (r.ok ? r.json() : null))
-      .then((data: { username: string } | null) => {
-        setUser(data ? { username: data.username } : null);
+      .then((data: { username: string; role: string; permissions: string[] } | null) => {
+        if (data) {
+          setUser({ username: data.username, role: data.role, permissions: data.permissions ?? [] });
+        } else {
+          setUser(null);
+        }
       })
       .catch(() => setUser(null))
       .finally(() => setIsLoading(false));
@@ -23,5 +29,15 @@ export function useAdminAuth() {
     setUser(null);
   }, []);
 
-  return { user, isLoading, logout };
+  /** True if the user can access a given section key */
+  const hasPermission = useCallback(
+    (section: string): boolean => {
+      if (!user) return false;
+      if (user.role === "super_admin") return true;
+      return user.permissions.includes(section);
+    },
+    [user]
+  );
+
+  return { user, isLoading, logout, hasPermission };
 }
