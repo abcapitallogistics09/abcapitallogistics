@@ -1,0 +1,249 @@
+You are a senior full-stack engineer. Build a production-ready internal quotation system for a logistics company called "AB Capital Logistics".
+
+Follow these requirements strictly.
+
+-----------------------------------
+1. TECH STACK
+-----------------------------------
+Frontend:
+- Next.js (React)
+- Tailwind CSS
+
+Backend:
+- Node.js with Express
+
+Database:
+- PostgreSQL
+
+PDF Generation:
+- Puppeteer (HTML to PDF)
+
+-----------------------------------
+2. CORE FUNCTIONAL REQUIREMENT
+-----------------------------------
+This system must implement a HYBRID PRICING MODEL:
+
+A. Manual Inputs (entered by staff):
+- Freight Cost
+- Customs Duties
+- Other Charges (dynamic rows)
+
+B. System Charges (from database):
+- Documentation Fee
+- Clearance Fee
+- Handling Fee
+- Delivery Fee
+
+Staff can:
+- Select/deselect system charges via checkbox
+- View amounts
+- NOT edit unless admin
+
+-----------------------------------
+3. MAIN FEATURE: CREATE QUOTE
+-----------------------------------
+
+Build a single-page "Create Quote" interface with:
+
+SECTION 1: Shipment Details
+- Mode (Air, Sea LCL, Sea FCL, Clearance Only)
+- Origin (text)
+- Destination (text)
+- Incoterm (dropdown)
+- Cargo Type
+- Weight (kg)
+- Volume (CBM)
+
+Dynamic behavior:
+- Air → show weight
+- Sea LCL → show volume
+- FCL → show container type
+- Clearance Only → hide freight logic
+
+-----------------------------------
+
+SECTION 2: Manual Costs
+- Freight Cost (input)
+- Customs Duties (input)
+- Other Charges (add/remove dynamic rows)
+
+Each row:
+- name
+- amount
+
+-----------------------------------
+
+SECTION 3: System Charges
+- Fetch from API (/api/charges)
+- Display list with:
+  - checkbox
+  - name
+  - amount
+
+-----------------------------------
+
+SECTION 4: Margin
+- Type: percentage or fixed
+- Value input
+
+-----------------------------------
+
+SECTION 5: Live Summary (real-time update)
+Display:
+- manual total
+- system charges total
+- subtotal
+- margin
+- final total
+
+-----------------------------------
+
+SECTION 6: Actions
+- Save Draft
+- Generate PDF
+
+-----------------------------------
+4. BACKEND LOGIC
+-----------------------------------
+
+Implement calculation function:
+
+total = (manual costs + selected system charges) + margin
+
+Margin logic:
+IF percentage:
+  margin = subtotal * (value / 100)
+ELSE:
+  margin = fixed value
+
+Return:
+- manualTotal
+- systemTotal
+- subtotal
+- margin
+- total
+
+-----------------------------------
+5. DATABASE SCHEMA
+-----------------------------------
+
+Create PostgreSQL tables:
+
+users:
+- id
+- name
+- email
+- password_hash
+- role
+
+charges:
+- id
+- name
+- amount
+- currency
+- type
+- is_optional
+- is_default
+- editable
+
+quotations:
+- id
+- customer_name
+- origin
+- destination
+- mode
+- incoterm
+- total_cost
+- created_at
+
+quotation_items:
+- id
+- quotation_id
+- name
+- amount
+- source (manual/system)
+
+-----------------------------------
+6. API ENDPOINTS
+-----------------------------------
+
+POST /api/quotes
+GET /api/charges
+POST /api/charges
+GET /api/quotes/:id
+GET /api/quotes/:id/pdf
+
+-----------------------------------
+7. PDF GENERATION
+-----------------------------------
+
+Generate a professional quotation PDF with:
+
+- Company header: AB Capital Logistics
+- Quote number
+- Date
+- Client name
+- Shipment details
+- Cost breakdown table:
+  - Freight
+  - Duties
+  - System charges
+  - Subtotal
+  - Margin
+  - Total
+
+Use Puppeteer with styled HTML template.
+
+-----------------------------------
+8. PERMISSIONS
+-----------------------------------
+
+- Admin:
+  - can edit charges
+  - can override values
+
+- Staff:
+  - can create quotes
+  - cannot edit system charge values
+
+-----------------------------------
+9. UX REQUIREMENTS
+-----------------------------------
+
+- Clean dashboard layout
+- Real-time calculation updates
+- Form validation
+- Prevent submission if required fields missing
+
+-----------------------------------
+10. OUTPUT REQUIREMENTS
+-----------------------------------
+
+Generate:
+- Full backend (Express server)
+- Database connection
+- API routes
+- Frontend pages (Next.js)
+- Tailwind styling
+- Working PDF generation
+- Example seed data for charges
+
+-----------------------------------
+11. IMPORTANT
+-----------------------------------
+
+- Do NOT overcomplicate logic
+- Keep pricing engine simple and reliable
+- Code must be modular and clean
+- Include comments for key logic
+
+-----------------------------------
+
+Start by:
+1. Setting up backend
+2. Creating database schema
+3. Building API
+4. Then frontend UI
+5. Then PDF generation
+
+Ensure everything runs locally in Replit.

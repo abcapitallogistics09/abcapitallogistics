@@ -6,6 +6,7 @@ import trackingRouter from "./tracking";
 import openaiRouter from "./openai";
 import adminRouter from "./admin";
 import storageRouter from "./storage";
+import quotationsRouter from "./quotations";
 
 const router: IRouter = Router();
 
@@ -16,5 +17,6 @@ router.use(trackingRouter);
 router.use(openaiRouter);
 router.use(adminRouter);
 router.use(storageRouter);
+router.use(quotationsRouter);
 
 export default router;

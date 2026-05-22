@@ -13,6 +13,9 @@ import AdminGallery from "./AdminGallery";
 import AdminGalleryEdit from "./AdminGalleryEdit";
 import AdminAIConversations from "./AdminAIConversations";
 import AdminAITraining from "./AdminAITraining";
+import AdminQuotationsList from "./AdminQuotationsList";
+import AdminCreateQuote from "./AdminCreateQuote";
+import AdminCharges from "./AdminCharges";
 
 export default function AdminApp() {
   const { user, isLoading } = useAdminAuth();
@@ -35,18 +38,35 @@ export default function AdminApp() {
   if (!user) return null;
 
   const renderPage = () => {
+    // Dashboard
     if (location === "/admin" || location === "/admin/") return <AdminDashboard />;
+
+    // CRM
     if (location === "/admin/quotes") return <AdminQuotes />;
     if (location === "/admin/contacts") return <AdminContacts />;
+
+    // Blog
     if (location === "/admin/blog") return <AdminBlog />;
     if (location === "/admin/blog/new") return <AdminBlogEdit />;
+
+    // Jobs
     if (location === "/admin/jobs") return <AdminJobs />;
     if (location === "/admin/jobs/new") return <AdminJobEdit />;
+
+    // Gallery
     if (location === "/admin/gallery") return <AdminGallery />;
     if (location === "/admin/gallery/new") return <AdminGalleryEdit />;
+
+    // AI
     if (location === "/admin/ai/conversations") return <AdminAIConversations />;
     if (location === "/admin/ai/training") return <AdminAITraining />;
 
+    // Quotation System
+    if (location === "/admin/quotations") return <AdminQuotationsList />;
+    if (location === "/admin/quotations/new") return <AdminCreateQuote />;
+    if (location === "/admin/charges") return <AdminCharges />;
+
+    // Dynamic routes
     const blogEditMatch = location.match(/^\/admin\/blog\/(\d+)\/edit$/);
     if (blogEditMatch) return <AdminBlogEdit id={blogEditMatch[1]} />;
 
@@ -55,6 +75,9 @@ export default function AdminApp() {
 
     const galleryEditMatch = location.match(/^\/admin\/gallery\/(\d+)\/edit$/);
     if (galleryEditMatch) return <AdminGalleryEdit id={galleryEditMatch[1]} />;
+
+    const quotationViewMatch = location.match(/^\/admin\/quotations\/(\d+)$/);
+    if (quotationViewMatch) return <AdminQuotationsList />;
 
     return <AdminDashboard />;
   };
