@@ -211,7 +211,7 @@ export function ChatWidget() {
       {/* Floating button */}
       <motion.button
         onClick={() => (open ? setOpen(false) : openChat())}
-        className="fixed bottom-24 right-6 z-50 w-14 h-14 bg-[#00AEEF] hover:bg-[#0095cc] text-white rounded-full shadow-2xl flex items-center justify-center transition-colors duration-200"
+        className="fixed bottom-[4.5rem] right-4 sm:bottom-24 sm:right-6 z-50 w-12 h-12 sm:w-14 sm:h-14 bg-[#00AEEF] hover:bg-[#0095cc] text-white rounded-full shadow-2xl flex items-center justify-center transition-colors duration-200"
         whileHover={{ scale: 1.08 }}
         whileTap={{ scale: 0.95 }}
         aria-label="Open AI chat assistant"
@@ -244,7 +244,7 @@ export function ChatWidget() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 0.5 }}
-          className="fixed bottom-[5.5rem] right-6 z-50 pointer-events-none"
+          className="fixed bottom-[3.75rem] right-4 sm:bottom-[5.5rem] sm:right-6 z-50 pointer-events-none"
         >
           <span className="block text-center text-[10px] font-semibold text-[#0B1F3A] bg-white/90 backdrop-blur-sm px-2 py-0.5 rounded-full shadow-sm border border-gray-100 whitespace-nowrap mx-auto w-fit">
             AI Assistant
@@ -260,8 +260,8 @@ export function ChatWidget() {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
             transition={{ duration: 0.22, ease: "easeOut" }}
-            className="fixed bottom-44 right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-100"
-            style={{ height: "500px" }}
+            className="fixed bottom-[8.5rem] right-4 sm:bottom-44 sm:right-6 z-50 w-[360px] max-w-[calc(100vw-2rem)] bg-white rounded-2xl shadow-2xl flex flex-col overflow-hidden border border-gray-100"
+            style={{ height: "min(500px, calc(100dvh - 10rem))" }}
           >
             {/* Header */}
             <div className="bg-[#0B1F3A] px-4 py-3 flex items-center gap-3 shrink-0">

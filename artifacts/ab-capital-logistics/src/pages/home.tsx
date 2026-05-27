@@ -159,7 +159,7 @@ export default function Home() {
         </AnimatePresence>
 
         {/* Slide Content */}
-        <div className="relative z-10 h-full flex flex-col justify-center container mx-auto px-4 md:px-6 pt-20">
+        <div className="relative z-10 h-full flex flex-col justify-center container mx-auto px-4 md:px-6 pt-16 sm:pt-20 pb-28 sm:pb-8">
           <AnimatePresence mode="wait">
             <motion.div
               key={`content-${current}`}
@@ -183,7 +183,7 @@ export default function Home() {
               <motion.h1
                 variants={textVariants}
                 transition={{ duration: 0.55, delay: 0.12 }}
-                className="text-5xl md:text-7xl font-bold text-white leading-[1.05] mb-6"
+                className="text-3xl sm:text-5xl md:text-6xl lg:text-7xl font-bold text-white leading-[1.05] mb-4 sm:mb-6"
               >
                 {slide.headline.split("\n").map((line, i) => (
                   <span key={i} className="block">
@@ -196,7 +196,7 @@ export default function Home() {
               <motion.p
                 variants={textVariants}
                 transition={{ duration: 0.55, delay: 0.2 }}
-                className="text-lg md:text-xl text-gray-200 mb-10 max-w-2xl leading-relaxed"
+                className="text-sm sm:text-lg md:text-xl text-gray-200 mb-6 sm:mb-10 max-w-2xl leading-relaxed"
               >
                 {slide.subtext}
               </motion.p>

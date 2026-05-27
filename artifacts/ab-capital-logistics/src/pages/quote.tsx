@@ -219,7 +219,7 @@ export default function Quote() {
                             </FormItem>
                           )}
                         />
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <FormField
                             control={form.control}
                             name="weight"
@@ -247,7 +247,7 @@ export default function Quote() {
                             )}
                           />
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <FormField
                             control={form.control}
                             name="origin"
@@ -327,7 +327,7 @@ export default function Quote() {
                         className="space-y-5"
                       >
                         <h2 className="text-xl font-bold text-primary mb-4">Contact Information</h2>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <FormField
                             control={form.control}
                             name="name"
@@ -355,7 +355,7 @@ export default function Quote() {
                             )}
                           />
                         </div>
-                        <div className="grid grid-cols-2 gap-4">
+                        <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                           <FormField
                             control={form.control}
                             name="email"
@@ -410,7 +410,7 @@ export default function Quote() {
                         <div className="space-y-4">
                           <div className="bg-gray-50 rounded-xl p-5">
                             <h3 className="font-semibold text-gray-700 mb-3 text-sm uppercase tracking-wide">Cargo Details</h3>
-                            <div className="grid grid-cols-2 gap-3 text-sm">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                               <div><span className="text-gray-500">Freight Type:</span> <span className="font-medium">{freightOptions.find(f => f.value === values.freightType)?.label}</span></div>
                               <div><span className="text-gray-500">Cargo:</span> <span className="font-medium">{values.cargoType}</span></div>
                               <div><span className="text-gray-500">Weight:</span> <span className="font-medium">{values.weight}</span></div>
@@ -423,7 +423,7 @@ export default function Quote() {
                           </div>
                           <div className="bg-gray-50 rounded-xl p-5">
                             <h3 className="font-semibold text-gray-700 mb-3 text-sm uppercase tracking-wide">Contact Information</h3>
-                            <div className="grid grid-cols-2 gap-3 text-sm">
+                            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-sm">
                               <div><span className="text-gray-500">Name:</span> <span className="font-medium">{values.name}</span></div>
                               {values.company && <div><span className="text-gray-500">Company:</span> <span className="font-medium">{values.company}</span></div>}
                               <div><span className="text-gray-500">Email:</span> <span className="font-medium">{values.email}</span></div>
